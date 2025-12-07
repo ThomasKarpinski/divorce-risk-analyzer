@@ -1,7 +1,7 @@
-# Mental Health Prediction & AI Support System
+# Divorce Prediction & AI Support System
 
 ## Overview
-This project is a comprehensive web application designed to assess mental health risks based on a 54-question survey. By utilizing Machine Learning (Random Forest/Logistic Regression), the system predicts potential risk levels and identifies the top 3 contributing factors for each user.
+This project is a comprehensive web application designed to assess mental divorce risks based on a 54-question survey. By utilizing Machine Learning (Random Forest/Logistic Regression), the system predicts potential risk levels and identifies the top 3 contributing factors for each user.
 
 Beyond simple prediction, the platform offers an **AI-driven Chatbot** (powered by Ollama) that generates a "Chain-of-Thought" action plan tailored to the user's specific risk factors. The system includes detailed statistics, email reporting, and role-based access control.
 
