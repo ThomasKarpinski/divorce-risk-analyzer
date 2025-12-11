@@ -24,7 +24,7 @@ try:
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
 
-    # 1. Calculate Metrics
+                          
     acc = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred)
     prec = precision_score(y_test, y_pred)
@@ -35,19 +35,19 @@ try:
         'Value': [acc, f1, prec, rec]
     }
 
-    # 2. Get Feature Importances
+                                
     importances = model.feature_importances_
     feature_names = X.columns
     
     feat_df = pd.DataFrame({'Feature': feature_names, 'Importance': importances})
     feat_df = feat_df.sort_values(by='Importance', ascending=False).head(10)
     
-    # Append top features to the list
+                                     
     for index, row in feat_df.iterrows():
         data['Metric_Name'].append(f"Feature_Importance_{row['Feature']}")
         data['Value'].append(row['Importance'])
 
-    # 3. Save to CSV
+                    
     results_df = pd.DataFrame(data)
     csv_filename = 'model_metrics_and_features.csv'
     results_df.to_csv(csv_filename, index=False)
