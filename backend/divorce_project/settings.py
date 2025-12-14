@@ -34,6 +34,7 @@ CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", "http://localhost"
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'core',
     'django.contrib.admin',
     'django.contrib.auth',
