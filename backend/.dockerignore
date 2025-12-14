@@ -1,0 +1,24 @@
+#  Pythonowe śmieci 
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+#  Lokalne środowisko wirtualne
+venv/
+.venv/
+env/
+
+#  Pliki konfiguracyjne i sekrety 
+.env
+.env.*
+Dockerfile
+README.md
+
+#  Git 
+.git/
+.gitignore
+
+#  IDE 
+.vscode/
+.idea/
