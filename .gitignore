@@ -1,0 +1,36 @@
+#  Bezpieczeństwo (Najważniejsze!) 
+.env
+.env.*
+! .env.example
+
+#  Python 
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+#  Środowisko Wirtualne 
+venv/
+.venv/
+env/
+
+#  Baza Danych (lokalne pliki) 
+db.sqlite3
+postgres_data/
+mysql_data/
+/srv/
+
+#  Django 
+*.log
+local_settings.py
+staticfiles/
+media/
+
+#  IDE i System 
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+#  Docker 
+docker-compose.override.yml
