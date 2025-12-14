@@ -2,7 +2,7 @@
 services:
   # 1. Baza Danych PostgreSQL [cite: 13, 24]
   db:
-    image: postgres:15
+    image: postgres:17
     restart: always
     environment:
       POSTGRES_DB: divorce_db
@@ -20,7 +20,7 @@ services:
     restart: always
     command: bash -c "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 divorce_project.wsgi:application"
     volumes:
-      # Mapujemy kod "na żywo", żebyś mógł programować bez restartowania kontenera
+      # Mapujemy kod "na żywo", żebym mógł programować bez restartowania kontenera
       - ./backend:/app
     depends_on:
       - db
@@ -43,7 +43,7 @@ services:
     image: nginx:alpine
     restart: always
     ports:
-      - "127.0.0.1:8080:80"  # <--- ZMIANA: Wystawiamy port 80 kontenera na port 8080 localhosta
+      - "8080:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:

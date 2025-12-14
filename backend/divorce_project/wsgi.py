@@ -1,5 +1,5 @@
 """
-WSGI config for divorce_project project.
+WSGI config for divorce_apps project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

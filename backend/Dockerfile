@@ -17,4 +17,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Domyślna komenda (uruchomimy ją przez docker-compose)
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "divorce_app.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "divorce_project.wsgi:application"]
