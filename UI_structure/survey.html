@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divorce Risk Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ff6b81;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .question {
+            margin-bottom: 1.5rem;
+        }
+
+        .question label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        select {
+            padding: 0.6rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 90px;
+            font-size: 1rem;
+        }
+
+button {
+    background-color: #ff6b81;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+
+    /* ✨ animacja */
+    transition: 
+        background-color 0.3s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+button:hover {
+    background-color: rgb(238, 10, 67);
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(238, 10, 67, 0.35);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Divorce Risk Survey</h1>
+        <p>Please answer all questions by selecting a number from 1 (Strongly Disagree) to 4 (Strongly Agree)</p>
+    </header>
+
+    <main>
+        <form action="result.html" method="POST">
+    <div class="question">
+        <label for="q1">1. When one of our apologies apologizes when our discussions go in a bad direction, the issue does not extend.</label>
+        <select name="q1" id="q1" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q2">2. I know we can ignore our differences, even if things get hard sometimes.</label>
+        <select name="q2" id="q2" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q3">3. When we need it, we can take our discussions with my wife from the beginning and correct it.</label>
+        <select name="q3" id="q3" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q4">4. When I argue with my wife, it will eventually work for me to contact him.</label>
+        <select name="q4" id="q4" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q5">5. The time I spent with my wife is special for us.</label>
+        <select name="q5" id="q5" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q6">6. We don't have time at home as partners.</label>
+        <select name="q6" id="q6" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q7">7. We are like two strangers who share the same environment at home rather than family.</label>
+        <select name="q7" id="q7" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q8">8. I enjoy our holidays with my wife.</label>
+        <select name="q8" id="q8" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q9">9. I enjoy traveling with my wife.</label>
+        <select name="q9" id="q9" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q10">10. My wife and most of our goals are common.</label>
+        <select name="q10" id="q10" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q11">11. I think that one day in the future, when I look back, I see that my wife and I are in harmony with each other.</label>
+        <select name="q11" id="q11" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q12">12. My wife and I have similar values in terms of personal freedom.</label>
+        <select name="q12" id="q12" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q13">13. My husband and I have similar entertainment.</label>
+        <select name="q13" id="q13" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q14">14. Most of our goals for people (children, friends, etc.) are the same.</label>
+        <select name="q14" id="q14" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q15">15. Our dreams of living with my wife are similar and harmonious</label>
+        <select name="q15" id="q15" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q16">16. We're compatible with my wife about what love should be</label>
+        <select name="q16" id="q16" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q17">17. We share the same views with my wife about being happy in your life</label>
+        <select name="q17" id="q17" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q18">18. My wife and I have similar ideas about how marriage should be</label>
+        <select name="q18" id="q18" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q19">19. My wife and I have similar ideas about how roles should be in marriage</label>
+        <select name="q19" id="q19" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q20">20. My wife and I have similar values in trust</label>
+        <select name="q20" id="q20" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q21">21. I know exactly what my wife likes.</label>
+        <select name="q21" id="q21" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q22">22. I know how my wife wants to be taken care of when she's sick.</label>
+        <select name="q22" id="q22" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q23">23. I know my wife's favorite food.</label>
+        <select name="q23" id="q23" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q24">24. I can tell you what kind of stress my wife is facing in her life.</label>
+        <select name="q24" id="q24" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q25">25. I have knowledge of my wife's inner world.</label>
+        <select name="q25" id="q25" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q26">26. I know my wife's basic concerns.</label>
+        <select name="q26" id="q26" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q27">27. I know what my wife's current sources of stress are.</label>
+        <select name="q27" id="q27" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q28">28. I know my wife's hopes and wishes.</label>
+        <select name="q28" id="q28" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q29">29. I know my wife very well.</label>
+        <select name="q29" id="q29" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q30">30. I know my wife's friends and their social relationships.</label>
+        <select name="q30" id="q30" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q31">31. I feel aggressive when I argue with my wife.</label>
+        <select name="q31" id="q31" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q32">32. When discussing with my wife, I usually use expressions such as "you always" or "you never".</label>
+        <select name="q32" id="q32" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q33">33. I can use negative statements about my wife's personality during our discussions.</label>
+        <select name="q33" id="q33" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q34">34. I can use offensive expressions during our discussions.</label>
+        <select name="q34" id="q34" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q35">35. I can insult our discussions.</label>
+        <select name="q35" id="q35" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q36">36. I can be humiliating when we argue.</label>
+        <select name="q36" id="q36" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q37">37. My argument with my wife is not calm.</label>
+        <select name="q37" id="q37" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q38">38. I hate my wife's way of bringing it up.</label>
+        <select name="q38" id="q38" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q39">39. Fights often occur suddenly.</label>
+        <select name="q39" id="q39" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q40">40. We're just starting a fight before I know what's going on.</label>
+        <select name="q40" id="q40" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q41">41. When I talk to my wife about something, my calm suddenly breaks.</label>
+        <select name="q41" id="q41" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q42">42. When I argue with my wife, it only snaps in and I don't say a word.</label>
+        <select name="q42" id="q42" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q43">43. I'm mostly thirsty to calm the environment a little bit.</label>
+        <select name="q43" id="q43" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q44">44. Sometimes I think it's good for me to leave home for a while.</label>
+        <select name="q44" id="q44" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q45">45. I'd rather stay silent than argue with my wife.</label>
+        <select name="q45" id="q45" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q46">46. Even if I'm right in the argument, I'm thirsty not to upset the other side.</label>
+        <select name="q46" id="q46" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q47">47. When I argue with my wife, I remain silent because I am afraid of not being able to control my anger.</label>
+        <select name="q47" id="q47" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q48">48. I feel right in our discussions.</label>
+        <select name="q48" id="q48" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q49">49. I have nothing to do with what I've been accused of.</label>
+        <select name="q49" id="q49" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q50">50. I'm not actually the one who's guilty about what I'm accused of.</label>
+        <select name="q50" id="q50" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q51">51. I'm not the one who's wrong about problems at home.</label>
+        <select name="q51" id="q51" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q52">52. I wouldn't hesitate to tell her about my wife's inadequacy.</label>
+        <select name="q52" id="q52" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q53">53. When I discuss it, I remind her of my wife's inadequate issues.</label>
+        <select name="q53" id="q53" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+    <div class="question">
+        <label for="q54">54. I'm not afraid to tell her about my wife's incompetence.</label>
+        <select name="q54" id="q54" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+    </div>
+
+    </form>
+            </div>
+            <button type="submit">Submit Survey</button>
+        </form>
+    </main>
+</body>
+</html>
