@@ -7,10 +7,11 @@ services:
     environment:
       POSTGRES_DB: divorce_db
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: bardzo_trudne_haslo_zmien_je
     volumes:
       # Mapowanie danych na dysk serwera (bezpieczeństwo danych)
       - /srv/dbdata/divorce_data:/var/lib/postgresql/data
+    env_file:
+      - .env
     networks:
       - app-network
 
