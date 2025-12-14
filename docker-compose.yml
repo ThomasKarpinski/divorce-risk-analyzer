@@ -23,6 +23,7 @@ services:
     volumes:
       # Mapujemy kod "na żywo", żebym mógł programować bez restartowania kontenera
       - ./backend:/app
+      - static_volume:/app/staticfiles
     depends_on:
       - db
       - ollama
@@ -47,13 +48,24 @@ services:
       - "8080:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - static_volume:/app/staticfiles
     depends_on:
       - web
+    networks:
+      - app-network
+  
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiMDVkNjI2ZmNjMTViZTVkNGM0ODY0MzkzNWFkMmFjNGQiLCJ0IjoiZTYyZjczZDQtZDAzOS00YzI3LWI3NjMtMDM1NzI2ZDA0OTVkIiwicyI6Ik9EYzNOMlJoWXpVdE16UmxZeTAwTjJZMkxUbG1ZbVV0WmpNNVl6a3laRE00T0RVMSJ9
     networks:
       - app-network
 
 volumes:
   ollama_data:
+  static_volume:
 
 networks:
   app-network:

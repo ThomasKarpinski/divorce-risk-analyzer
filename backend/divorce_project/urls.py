@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.http import HttpResponse  # <--- Dodaj ten import
+
+# Prosta funkcja, która zwraca tekst (zamiast pliku HTML)
+def home(request):
+    return HttpResponse("<h1>Witaj! Aplikacja Divorce Risk działa poprawnie!</h1>")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home),  # <--- To mówi: jak ktoś wejdzie na główną stronę, pokaż funkcję 'home'
 ]
