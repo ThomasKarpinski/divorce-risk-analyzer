@@ -1,0 +1,16 @@
+Best Parameters: {'eval_metric': 'logloss', 'learning_rate': 0.01, 'max_depth': 3, 'n_estimators': 200, 'use_label_encoder': False}
+Test Accuracy: 0.9412
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.89      1.00      0.94        17
+           1       1.00      0.88      0.94        17
+
+    accuracy                           0.94        34
+   macro avg       0.95      0.94      0.94        34
+weighted avg       0.95      0.94      0.94        34
+
+Confusion Matrix:
+[[17  0]
+ [ 2 15]]

@@ -1,0 +1,20 @@
+Configuration: high_variance_fast
+Parameters: {'n_estimators': 50, 'max_depth': 6, 'learning_rate': 0.3, 'use_label_encoder': False, 'eval_metric': 'logloss', 'random_state': 42}
+
+Test Accuracy: 0.9412
+CV Scores: [0.91176471 1.         1.         1.         0.91176471]
+CV Mean: 0.9647
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.89      1.00      0.94        17
+           1       1.00      0.88      0.94        17
+
+    accuracy                           0.94        34
+   macro avg       0.95      0.94      0.94        34
+weighted avg       0.95      0.94      0.94        34
+
+Confusion Matrix:
+[[17  0]
+ [ 2 15]]
