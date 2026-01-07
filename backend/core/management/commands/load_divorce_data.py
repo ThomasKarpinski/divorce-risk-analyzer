@@ -13,6 +13,10 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f'{file_path} file not found'))
             return
 
+        # Clear existing data to prevent duplicates
+        deleted_count, _ = DivorceData.objects.all().delete()
+        self.stdout.write(self.style.WARNING(f'Deleted {deleted_count} existing records.'))
+
         with open(file_path, 'r') as file:
             reader = csv.DictReader(file, delimiter=';')
             

@@ -1,6 +1,6 @@
 
 services:
-  # 1. Baza Danych PostgreSQL [cite: 13, 24]
+  # 1. PostgreSQL Database [cite: 13, 24]
   db:
     image: postgres:17
     restart: always
@@ -8,7 +8,7 @@ services:
       POSTGRES_DB: divorce_db
       POSTGRES_USER: admin
     volumes:
-      # Mapowanie danych na dysk serwera (bezpieczeństwo danych)
+      # Mapping of the data to the server disk (data security)
       - /srv/dbdata/divorce_data:/var/lib/postgresql/data
     env_file:
       - .env
@@ -19,9 +19,9 @@ services:
   web:
     build: ./backend
     restart: always
-    command: bash -c "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 divorce_project.wsgi:application"
+    command: bash -c "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 --timeout 300 divorce_project.wsgi:application"
     volumes:
-      # Mapujemy kod "na żywo", żebym mógł programować bez restartowania kontenera
+      # We map the code "live", so I can program without restarting the container
       - ./backend:/app
       - static_volume:/app/staticfiles
     depends_on:
@@ -32,7 +32,7 @@ services:
     networks:
       - app-network
 
-  # 3. Serwer AI Ollama [cite: 15, 24]
+  # 3. AI Server Ollama [cite: 15, 24]
   ollama:
     image: ollama/ollama:latest
     volumes:
@@ -58,8 +58,8 @@ services:
     image: cloudflare/cloudflared:latest
     restart: always
     command: tunnel run
-    environment:
-      - TUNNEL_TOKEN=eyJhIjoiMDVkNjI2ZmNjMTViZTVkNGM0ODY0MzkzNWFkMmFjNGQiLCJ0IjoiZTYyZjczZDQtZDAzOS00YzI3LWI3NjMtMDM1NzI2ZDA0OTVkIiwicyI6Ik9EYzNOMlJoWXpVdE16UmxZeTAwTjJZMkxUbG1ZbVV0WmpNNVl6a3laRE00T0RVMSJ9
+    env_file:
+      - .env
     networks:
       - app-network
 

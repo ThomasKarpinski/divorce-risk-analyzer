@@ -23,10 +23,10 @@ class SurveyAnswer(models.Model):
         related_name='answers'
     )
 
-    # Definiujemy 54 pola. 
-    # Dataset używa skali 0-4. Używamy PositiveSmallIntegerField dla oszczędności miejsca.
-    # Aby nie pisać tego ręcznie, możesz użyć pętli, ale dla czytelności i IDE
-    # najlepiej zadeklarować je jawnie (poniżej skrócona wersja, musisz mieć q1...q54):
+    # we are defining 54 fields.
+    # Dataset uses scale0-4. We use PositiveSmallIntegerField for space efficiency.
+    # To avoid writing manually, you can use a loop, but for readability and IDE support
+    # it's best to declare them explicitly (below is a shortened version, you need q1...q54):
     
     q1 = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(4)])
     q2 = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(4)])
