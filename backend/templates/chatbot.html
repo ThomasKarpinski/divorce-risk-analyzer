@@ -148,9 +148,17 @@
 
     <main>
         <div id="chat-window">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="message {% if message.role == 'user' %}user-message{% else %}ai-message{% endif %}">
+                    {{ message.content }}
+                </div>
+                {% endfor %}
+            {% else %}
             <div class="message ai-message">
                 Hello! I am your AI relationship assistant. How can I help you today?
             </div>
+            {% endif %}
         </div>
 
         <div id="loading-indicator" class="loading" style="display: none;">
@@ -172,6 +180,11 @@
         const userInput = document.getElementById('user-input');
         const chatWindow = document.getElementById('chat-window');
         const loadingIndicator = document.getElementById('loading-indicator');
+
+        // Scroll to bottom on load
+        window.onload = function() {
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        };
 
         function appendMessage(text, isUser) {
             const msgDiv = document.createElement('div');
