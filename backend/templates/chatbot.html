@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Relationship Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #ff6b81;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        main {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 1rem auto;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        #chat-window {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 15px;
+            line-height: 1.4;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #ff6b81;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .ai-message {
+            align-self: flex-start;
+            background-color: #f0f0f0;
+            color: #333;
+            border-bottom-left-radius: 2px;
+        }
+
+        .input-area {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        button {
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #ee0a43;
+        }
+
+        .loading {
+            margin-bottom: 0.5rem;
+            padding: 0 1.5rem;
+        }
+
+        /* Typing Animation */
+        .typing-indicator {
+            background-color: #f0f0f0;
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            border-bottom-left-radius: 2px;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #aaa;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out both;
+            margin: 0 2px;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes typing {
+            0%, 80%, 100% { 
+                transform: scale(0);
+            }
+            40% { 
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Relationship Assistant</h1>
+        <a href="{% url 'home' %}" style="color: white; text-decoration: none; font-size: 0.9rem;">Back to Home</a>
+    </header>
+
+    <main>
+        <div id="chat-window">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="message {% if message.role == 'user' %}user-message{% else %}ai-message{% endif %}">
+                    {{ message.content }}
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="message ai-message">
+                Hello! I am your AI relationship assistant. How can I help you today?
+            </div>
+            {% endif %}
+        </div>
+
+        <div id="loading-indicator" class="loading" style="display: none;">
+            <div class="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <form id="chat-form" class="input-area">
+            <input type="text" id="user-input" placeholder="Type your message here..." required autocomplete="off">
+            <button type="submit">Send</button>
+        </form>
+    </main>
+
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const chatWindow = document.getElementById('chat-window');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        // Scroll to bottom on load
+        window.onload = function() {
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        };
+
+        function appendMessage(text, isUser) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+            msgDiv.textContent = text;
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            appendMessage(message, true);
+            userInput.value = '';
+            
+            loadingIndicator.style.display = 'block';
+
+            fetch("{% url 'chatbot_api' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingIndicator.style.display = 'none';
+                if (data.response) {
+                    appendMessage(data.response, false);
+                } else if (data.error) {
+                    appendMessage("Error: " + data.error, false);
+                }
+            })
+            .catch(error => {
+                loadingIndicator.style.display = 'none';
+                appendMessage("Error connecting to server.", false);
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

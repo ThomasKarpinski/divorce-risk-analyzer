@@ -1,0 +1,72 @@
+
+services:
+  # 1. PostgreSQL Database [cite: 13, 24]
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_DB: divorce_db
+      POSTGRES_USER: admin
+    volumes:
+      # Mapping of the data to the server disk (data security)
+      - /srv/dbdata/divorce_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  # 2. Backend Django + Gunicorn [cite: 12, 16, 23]
+  web:
+    build: ./backend
+    restart: always
+    command: bash -c "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 --timeout 300 divorce_project.wsgi:application"
+    volumes:
+      # We map the code "live", so I can program without restarting the container
+      - ./backend:/app
+      - static_volume:/app/staticfiles
+    depends_on:
+      - db
+      - ollama
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  # 3. AI Server Ollama [cite: 15, 24]
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - app-network
+
+  # 4. Nginx Reverse Proxy [cite: 17, 25]
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - static_volume:/app/staticfiles
+    depends_on:
+      - web
+    networks:
+      - app-network
+  
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    command: tunnel run
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+volumes:
+  ollama_data:
+  static_volume:
+
+networks:
+  app-network:
+    driver: bridge
