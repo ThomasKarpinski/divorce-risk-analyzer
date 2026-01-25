@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Divorce Risk Survey - Welcome</title>
+    <title>{% trans "Divorce Risk Survey - Welcome" %}</title>
     <style>
         body {
             font-family: "Segoe UI", Arial, sans-serif;
@@ -46,6 +47,24 @@
         .login-btn:hover {
             background-color: #ff506b;
             transform: translateY(-2px);
+        }
+        
+        .lang-btn {
+            background-color: transparent;
+            color: #ff6b81;
+            border: 1px solid #ff6b81;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: 0.25s;
+            margin-right: 5px;
+        }
+        
+        .lang-btn:hover {
+             background-color: #ff6b81;
+             color: white;
         }
 
         header {
@@ -143,27 +162,50 @@
 <body>
 
     <!-- TOP BAR -->
-    <div class="top-bar">
-        {% if user.is_authenticated %}
-            <a href="{% url 'chatbot' %}" style="margin-right: 15px; text-decoration: none; color: #ff6b81; font-weight: bold;">AI Assistant</a>
-            <span>Welcome, {{ user.username }}!</span>
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+    <div class="top-bar" style="justify-content: space-between;">
+        <div style="display: flex; align-items: center;">
+             {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" style="margin-left: 20px; text-decoration: none; color: #ff6b81; font-weight: bold; font-size: 1.1rem;">{% trans "📊 Community Dashboard" %}</a>
+             {% endif %}
+        </div>
+        
+        <div style="display: flex; align-items: center;">
+            <form action="{% url 'set_language' %}" method="post" style="display:flex; margin-right: 15px;">
                 {% csrf_token %}
-                <button type="submit" class="login-btn" style="margin-left: 10px;">Logout</button>
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 5px; border: 1px solid #ccc;">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                        </option>
+                    {% endfor %}
+                </select>
             </form>
-        {% else %}
-            <a href="{% url 'register' %}" style="margin-right: 10px;">
-                <button class="login-btn" style="background-color: #ff8fa3;">Register</button>
-            </a>
-            <a href="{% url 'login' %}">
-                <button class="login-btn">Login</button>
-            </a>
-        {% endif %}
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'chatbot' %}" style="margin-right: 15px; text-decoration: none; color: #ff6b81; font-weight: bold;">{% trans "AI Assistant" %}</a>
+                <span>{% trans "Welcome" %}, {{ user.username }}!</span>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="login-btn" style="margin-left: 10px;">{% trans "Logout" %}</button>
+                </form>
+            {% else %}
+                <a href="{% url 'register' %}" style="margin-right: 10px;">
+                    <button class="login-btn" style="background-color: #ff8fa3;">{% trans "Register" %}</button>
+                </a>
+                <a href="{% url 'login' %}">
+                    <button class="login-btn">{% trans "Login" %}</button>
+                </a>
+            {% endif %}
+        </div>
     </div>
 
     <header>
-        <h1>Welcome to the Divorce Risk Survey</h1>
-        <p>Supporting couples in building healthy, loving relationships</p>
+        <h1>{% trans "Welcome to the Divorce Risk Survey" %}</h1>
+        <p>{% trans "Supporting couples in building healthy, loving relationships" %}</p>
     </header>
 
     <main>
@@ -172,40 +214,33 @@
                 <img src="{% static 'images/love-hate.jpg' %}" alt="Relationship illustration">
             </div>
             <p>
-                Our goal is to prevent divorces and help people strengthen their relationships. 
-                We aim to support couples in maintaining healthy, loving connections and developing 
-                the skills needed to understand each other better and build a happier life together.
+                {% trans "Our goal is to prevent divorces and help people strengthen their relationships. We aim to support couples in maintaining healthy, loving connections and developing the skills needed to understand each other better and build a happier life together." %}
             </p>
 
             <p>
-                To make your love life better, we invite you to take this short quiz. 
-                Please read each question carefully and choose the option that best reflects your experience.
-                Remember, there are no right or wrong answers—only honest ones. After completing the survey, 
-                you will be able to review the personalized results provided for you.
+                {% trans "To make your love life better, we invite you to take this short quiz. Please read each question carefully and choose the option that best reflects your experience. Remember, there are no right or wrong answers—only honest ones. After completing the survey, you will be able to review the personalized results provided for you." %}
             </p>
 
             <p>
-                We also encourage you to create an account to access detailed insights, additional data, 
-                and the opportunity to chat with our dedicated relationship-support chatbot, which can help explain 
-                specific areas of your results.
+                {% trans "We also encourage you to create an account to access detailed insights, additional data, and the opportunity to chat with our dedicated relationship-support chatbot, which can help explain specific areas of your results." %}
             </p>
 
 
             <!-- BIG BUTTON -->
             <div class="big-btn-wrapper">
                 <a href="{% url 'survey' %}">
-                    <button class="big-btn">Start Survey</button>
+                    <button class="big-btn">{% trans "Start Survey" %}</button>
                 </a>
             </div>
 
             <p class="under-button-text">
-                Begin the journey of understanding your relationship dynamics and improving your emotional connection.
+                {% trans "Begin the journey of understanding your relationship dynamics and improving your emotional connection." %}
             </p>
         </div>
     </main>
 
     <footer>
-        © 2025 AGH-Love-Support-Research • Helping couples grow stronger together
+        {% trans "© 2025 AGH-Love-Support-Research • Helping couples grow stronger together" %}
     </footer>
 
 </body>

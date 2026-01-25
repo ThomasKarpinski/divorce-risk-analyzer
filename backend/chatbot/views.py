@@ -1,6 +1,8 @@
 import logging
+import re
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import gettext as _, get_language
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -55,12 +57,12 @@ class ChatView(APIView):
             q40 = getattr(answers, 'q40', 0) # Arguments
 
             critical_issues = []
-            if q11 <= 1: critical_issues.append(f"Low harmony (Score: {q11}/4).")
-            if q17 <= 1: critical_issues.append(f"Different happiness views (Score: {q17}/4).")
-            if q40 >= 3: critical_issues.append(f"Sudden arguments (Score: {q40}/4).")
+            if q11 <= 1: critical_issues.append(_("Low harmony (Score: {score}/4).").format(score=q11))
+            if q17 <= 1: critical_issues.append(_("Different happiness views (Score: {score}/4).").format(score=q17))
+            if q40 >= 3: critical_issues.append(_("Sudden arguments (Score: {score}/4).").format(score=q40))
 
             if critical_issues:
-                context_str += "CRITICAL THREAT FACTORS: " + " ".join(critical_issues)
+                context_str += _("CRITICAL THREAT FACTORS: ") + " ".join(critical_issues)
             else:
                 # 2. General Analysis (Restored Logic)
                 # Positive Questions (Should be high): Q1-Q30
@@ -86,14 +88,14 @@ class ChatView(APIView):
                 findings = []
                 if worst_positive and worst_positive[1] <= 2:
                     q_text = get_q_text(worst_positive[0])
-                    findings.append(f"Main Area of Neglect: '{q_text}' (Score: {worst_positive[1]}/4 - Too Low).")
+                    findings.append(_("Main Area of Neglect: '{question}' (Score: {score}/4 - Too Low).").format(question=q_text, score=worst_positive[1]))
                 
                 if worst_negative and worst_negative[1] >= 2:
                     q_text = get_q_text(worst_negative[0])
-                    findings.append(f"Main Conflict Source: '{q_text}' (Score: {worst_negative[1]}/4 - Too High).")
+                    findings.append(_("Main Conflict Source: '{question}' (Score: {score}/4 - Too High).").format(question=q_text, score=worst_negative[1]))
 
                 if findings:
-                    context_str += " SPECIFIC AREAS TO DISCUSS: " + " ".join(findings)
+                    context_str += _(" SPECIFIC AREAS TO DISCUSS: ") + " ".join(findings)
 
         except SurveyAnswer.DoesNotExist:
             pass
@@ -123,10 +125,23 @@ class ChatView(APIView):
         #  Preparation of context
         survey_context = self._get_context_from_prediction(request.user)
         chat_history = self._get_langchain_history(request.user)
+        
+        # Get current language
+        lang_code = get_language()
+        lang_map = {
+            'pl': 'Polish',
+            'en': 'English',
+            'en-us': 'English',
+            'en-gb': 'English'
+        }
+        target_language = lang_map.get(lang_code.lower(), 'English')
+        
+        lang_instruction = f"IMPORTANT: You MUST answer in {target_language} language only."
 
         # Defining System Prompt with Chain of Thought
         system_prompt_text = (
             "You are a helpful and empathetic relationship counselor AI (Gottman Method).\n"
+            f"{lang_instruction}\n"
             "Below is the data from the user's divorce risk survey. You MUST memorize this:\n\n"
             
             f"=== SURVEY_DATA ===\n{survey_context}\n===================\n\n"
@@ -138,7 +153,8 @@ class ChatView(APIView):
             "   - Does the user's question relate to the survey?\n"
             "   - If yes -> look up the specific question in SURVEY_DATA.\n"
             "   - Draft the response.\n"
-            "4. Keep response short (max 3 sentences) and supportive."
+            "4. Keep response short (max 3 sentences) and supportive.\n"
+            f"5. REMEMBER: Answer in {target_language}."
         )
 
         # Setup LangChain
@@ -167,9 +183,8 @@ class ChatView(APIView):
                 "input": user_message
             })
             
-            final_response = response_text
-            if "</thought>" in response_text:
-                final_response = response_text.split("</thought>")[-1].strip()
+            # Robust filtering of <thought> tags using regex
+            final_response = re.sub(r'<thought>.*?</thought>', '', response_text, flags=re.DOTALL).strip()
 
             # 7. Save AI Message to DB (Django ORM)
             ChatMessage.objects.create(user=request.user, role='assistant', content=final_response)

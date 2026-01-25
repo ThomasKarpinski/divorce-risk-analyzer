@@ -1,9 +1,10 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Divorce Risk Survey</title>
+    <title>{% trans "Register - Divorce Risk Survey" %}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,6 +18,13 @@
             color: white;
             padding: 2rem 1rem;
             text-align: center;
+            position: relative;
+        }
+        
+        .lang-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
         }
 
         header h1 {
@@ -113,53 +121,69 @@
 <body>
 
     <header>
-        <h1>Create Your Account</h1>
-        <p>Join us and gain deeper insights into your relationship</p>
+        <h1>{% trans "Create Your Account" %}</h1>
+        <p>{% trans "Join us and gain deeper insights into your relationship" %}</p>
+        <div class="lang-switcher">
+            <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 5px; border: none; background: rgba(255,255,255,0.8); color: #333;">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.code|upper }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
     </header>
 
     <main>
         <form action="{% url 'register' %}" method="POST">
             {% csrf_token %}
 
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Choose a username" required>
+            <label for="username">{% trans "Username" %}</label>
+            <input type="text" id="username" name="username" placeholder="{% trans "Choose a username" %}" required>
 
-            <label for="birthdate">Date of Birth</label>
+            <label for="birthdate">{% trans "Date of Birth" %}</label>
             <input type="date" id="birthdate" name="birthdate" required>
 
-            <label for="gender">Gender</label>
+            <label for="gender">{% trans "Gender" %}</label>
             <select id="gender" name="gender" required>
-                <option value="">Select gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="">{% trans "Select gender" %}</option>
+                <option value="male">{% trans "Male" %}</option>
+                <option value="female">{% trans "Female" %}</option>
             </select>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Create a password" required>
+            <label for="password">{% trans "Password" %}</label>
+            <input type="password" id="password" name="password" placeholder="{% trans "Create a password" %}" required>
 
-            <label for="education">Education</label>
+            <label for="education">{% trans "Education" %}</label>
             <select id="education" name="education" required>
-                <option value="">Select education level</option>
-                <option value="primary">Primary</option>
-                <option value="secondary">Secondary</option>
-                <option value="bachelor">Bachelor</option>
-                <option value="master">Master</option>
-                <option value="phd">PhD</option>
+                <option value="">{% trans "Select education level" %}</option>
+                <option value="primary">{% trans "Primary" %}</option>
+                <option value="secondary">{% trans "Secondary" %}</option>
+                <option value="bachelor">{% trans "Bachelor" %}</option>
+                <option value="master">{% trans "Master" %}</option>
+                <option value="phd">{% trans "PhD" %}</option>
             </select>
 
-            <label for="residence">Residence</label>
+            <label for="residence">{% trans "Residence" %}</label>
             <select id="residence" name="residence" required>
-                <option value="">Select city size</option>
-                <option value="small">Small City / Town</option>
-                <option value="large">Large City</option>
+                <option value="">{% trans "Select city size" %}</option>
+                <option value="small">{% trans "Small City / Town" %}</option>
+                <option value="large">{% trans "Large City" %}</option>
             </select>
 
-            <button type="submit">Create Account</button>
+            <button type="submit">{% trans "Create Account" %}</button>
         </form>
 
         <div class="links">
-            <a href="{% url 'login' %}">Back to Login</a> •
-            <a href="{% url 'survey' %}">Continue as Guest</a>
+            <a href="{% url 'login' %}">{% trans "Back to Login" %}</a> •
+            <a href="{% url 'survey' %}">{% trans "Continue as Guest" %}</a>
         </div>
     </main>
 

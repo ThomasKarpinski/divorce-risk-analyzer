@@ -1,9 +1,10 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Divorce Risk Survey</title>
+    <title>{% trans "Divorce Risk Survey" %}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,6 +18,13 @@
             color: white;
             padding: 1.5rem;
             text-align: center;
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
         }
 
         main {
@@ -142,8 +150,24 @@
 <body>
 
     <header>
-        <h1>Divorce Risk Survey</h1>
-        <p>Scale: 0 (Strongly Disagree) to 4 (Strongly Agree)</p>
+        <h1>{% trans "Divorce Risk Survey" %}</h1>
+        <p>{% trans "Scale: 0 (Strongly Disagree) to 4 (Strongly Agree)" %}</p>
+        <div class="lang-switcher">
+            <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 5px; border: none; background: rgba(255,255,255,0.8); color: #333;">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.code|upper }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
     </header>
 
     <main>
@@ -153,7 +177,7 @@
             <div id="questions-container">
 
     <div class="question">
-        <label class="q-text">1. When one of our apologies apologizes when our discussions go in a bad direction, the issue does not extend.</label>
+        <label class="q-text">{% trans "1. When one of our apologies apologizes when our discussions go in a bad direction, the issue does not extend." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q1" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q1" value="1"> 1</label>
@@ -162,13 +186,13 @@
             <label class="radio-option"><input type="radio" name="q1" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q1"></span>
     </div>
     <div class="question">
-        <label class="q-text">2. I know we can ignore our differences, even if things get hard sometimes.</label>
+        <label class="q-text">{% trans "2. I know we can ignore our differences, even if things get hard sometimes." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q2" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q2" value="1"> 1</label>
@@ -177,13 +201,13 @@
             <label class="radio-option"><input type="radio" name="q2" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q2"></span>
     </div>
     <div class="question">
-        <label class="q-text">3. When we need it, we can take our discussions with my wife from the beginning and correct it.</label>
+        <label class="q-text">{% trans "3. When we need it, we can take our discussions with my wife from the beginning and correct it." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q3" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q3" value="1"> 1</label>
@@ -192,13 +216,13 @@
             <label class="radio-option"><input type="radio" name="q3" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q3"></span>
     </div>
     <div class="question">
-        <label class="q-text">4. When I argue with my wife, it will eventually work for me to contact him.</label>
+        <label class="q-text">{% trans "4. When I argue with my wife, it will eventually work for me to contact him." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q4" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q4" value="1"> 1</label>
@@ -207,13 +231,13 @@
             <label class="radio-option"><input type="radio" name="q4" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q4"></span>
     </div>
     <div class="question">
-        <label class="q-text">5. The time I spent with my wife is special for us.</label>
+        <label class="q-text">{% trans "5. The time I spent with my wife is special for us." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q5" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q5" value="1"> 1</label>
@@ -222,13 +246,13 @@
             <label class="radio-option"><input type="radio" name="q5" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q5"></span>
     </div>
     <div class="question">
-        <label class="q-text">6. We don't have time at home as partners.</label>
+        <label class="q-text">{% trans "6. We don't have time at home as partners." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q6" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q6" value="1"> 1</label>
@@ -237,13 +261,13 @@
             <label class="radio-option"><input type="radio" name="q6" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q6"></span>
     </div>
     <div class="question">
-        <label class="q-text">7. We are like two strangers who share the same environment at home rather than family.</label>
+        <label class="q-text">{% trans "7. We are like two strangers who share the same environment at home rather than family." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q7" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q7" value="1"> 1</label>
@@ -252,13 +276,13 @@
             <label class="radio-option"><input type="radio" name="q7" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q7"></span>
     </div>
     <div class="question">
-        <label class="q-text">8. I enjoy our holidays with my wife.</label>
+        <label class="q-text">{% trans "8. I enjoy our holidays with my wife." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q8" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q8" value="1"> 1</label>
@@ -267,13 +291,13 @@
             <label class="radio-option"><input type="radio" name="q8" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q8"></span>
     </div>
     <div class="question">
-        <label class="q-text">9. I enjoy traveling with my wife.</label>
+        <label class="q-text">{% trans "9. I enjoy traveling with my wife." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q9" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q9" value="1"> 1</label>
@@ -282,13 +306,13 @@
             <label class="radio-option"><input type="radio" name="q9" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q9"></span>
     </div>
     <div class="question">
-        <label class="q-text">10. My wife and most of our goals are common.</label>
+        <label class="q-text">{% trans "10. My wife and most of our goals are common." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q10" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q10" value="1"> 1</label>
@@ -297,13 +321,13 @@
             <label class="radio-option"><input type="radio" name="q10" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q10"></span>
     </div>
     <div class="question">
-        <label class="q-text">11. I think that one day in the future, when I look back, I see that my wife and I are in harmony with each other.</label>
+        <label class="q-text">{% trans "11. I think that one day in the future, when I look back, I see that my wife and I are in harmony with each other." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q11" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q11" value="1"> 1</label>
@@ -312,13 +336,13 @@
             <label class="radio-option"><input type="radio" name="q11" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q11"></span>
     </div>
     <div class="question">
-        <label class="q-text">12. My wife and I have similar values in terms of personal freedom.</label>
+        <label class="q-text">{% trans "12. My wife and I have similar values in terms of personal freedom." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q12" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q12" value="1"> 1</label>
@@ -327,13 +351,13 @@
             <label class="radio-option"><input type="radio" name="q12" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q12"></span>
     </div>
     <div class="question">
-        <label class="q-text">13. My husband and I have similar entertainment.</label>
+        <label class="q-text">{% trans "13. My husband and I have similar entertainment." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q13" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q13" value="1"> 1</label>
@@ -342,13 +366,13 @@
             <label class="radio-option"><input type="radio" name="q13" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q13"></span>
     </div>
     <div class="question">
-        <label class="q-text">14. Most of our goals for people (children, friends, etc.) are the same.</label>
+        <label class="q-text">{% trans "14. Most of our goals for people (children, friends, etc.) are the same." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q14" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q14" value="1"> 1</label>
@@ -357,13 +381,13 @@
             <label class="radio-option"><input type="radio" name="q14" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q14"></span>
     </div>
     <div class="question">
-        <label class="q-text">15. Our dreams of living with my wife are similar and harmonious</label>
+        <label class="q-text">{% trans "15. Our dreams of living with my wife are similar and harmonious" %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q15" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q15" value="1"> 1</label>
@@ -372,13 +396,13 @@
             <label class="radio-option"><input type="radio" name="q15" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q15"></span>
     </div>
     <div class="question">
-        <label class="q-text">16. We're compatible with my wife about what love should be</label>
+        <label class="q-text">{% trans "16. We're compatible with my wife about what love should be" %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q16" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q16" value="1"> 1</label>
@@ -387,13 +411,13 @@
             <label class="radio-option"><input type="radio" name="q16" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q16"></span>
     </div>
     <div class="question">
-        <label class="q-text">17. We share the same views with my wife about being happy in your life</label>
+        <label class="q-text">{% trans "17. We share the same views with my wife about being happy in your life" %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q17" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q17" value="1"> 1</label>
@@ -402,13 +426,13 @@
             <label class="radio-option"><input type="radio" name="q17" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q17"></span>
     </div>
     <div class="question">
-        <label class="q-text">18. My wife and I have similar ideas about how marriage should be</label>
+        <label class="q-text">{% trans "18. My wife and I have similar ideas about how marriage should be" %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q18" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q18" value="1"> 1</label>
@@ -417,13 +441,13 @@
             <label class="radio-option"><input type="radio" name="q18" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q18"></span>
     </div>
     <div class="question">
-        <label class="q-text">19. My wife and I have similar ideas about how roles should be in marriage</label>
+        <label class="q-text">{% trans "19. My wife and I have similar ideas about how roles should be in marriage" %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q19" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q19" value="1"> 1</label>
@@ -432,13 +456,13 @@
             <label class="radio-option"><input type="radio" name="q19" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q19"></span>
     </div>
     <div class="question">
-        <label class="q-text">20. My wife and I have similar values in trust</label>
+        <label class="q-text">{% trans "20. My wife and I have similar values in trust" %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q20" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q20" value="1"> 1</label>
@@ -447,13 +471,13 @@
             <label class="radio-option"><input type="radio" name="q20" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q20"></span>
     </div>
     <div class="question">
-        <label class="q-text">21. I know exactly what my wife likes.</label>
+        <label class="q-text">{% trans "21. I know exactly what my wife likes." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q21" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q21" value="1"> 1</label>
@@ -462,13 +486,13 @@
             <label class="radio-option"><input type="radio" name="q21" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q21"></span>
     </div>
     <div class="question">
-        <label class="q-text">22. I know how my wife wants to be taken care of when she's sick.</label>
+        <label class="q-text">{% trans "22. I know how my wife wants to be taken care of when she's sick." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q22" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q22" value="1"> 1</label>
@@ -477,13 +501,13 @@
             <label class="radio-option"><input type="radio" name="q22" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q22"></span>
     </div>
     <div class="question">
-        <label class="q-text">23. I know my wife's favorite food.</label>
+        <label class="q-text">{% trans "23. I know my wife's favorite food." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q23" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q23" value="1"> 1</label>
@@ -492,13 +516,13 @@
             <label class="radio-option"><input type="radio" name="q23" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q23"></span>
     </div>
     <div class="question">
-        <label class="q-text">24. I can tell you what kind of stress my wife is facing in her life.</label>
+        <label class="q-text">{% trans "24. I can tell you what kind of stress my wife is facing in her life." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q24" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q24" value="1"> 1</label>
@@ -507,13 +531,13 @@
             <label class="radio-option"><input type="radio" name="q24" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q24"></span>
     </div>
     <div class="question">
-        <label class="q-text">25. I have knowledge of my wife's inner world.</label>
+        <label class="q-text">{% trans "25. I have knowledge of my wife's inner world." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q25" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q25" value="1"> 1</label>
@@ -522,13 +546,13 @@
             <label class="radio-option"><input type="radio" name="q25" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q25"></span>
     </div>
     <div class="question">
-        <label class="q-text">26. I know my wife's basic concerns.</label>
+        <label class="q-text">{% trans "26. I know my wife's basic concerns." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q26" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q26" value="1"> 1</label>
@@ -537,13 +561,13 @@
             <label class="radio-option"><input type="radio" name="q26" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q26"></span>
     </div>
     <div class="question">
-        <label class="q-text">27. I know what my wife's current sources of stress are.</label>
+        <label class="q-text">{% trans "27. I know what my wife's current sources of stress are." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q27" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q27" value="1"> 1</label>
@@ -552,13 +576,13 @@
             <label class="radio-option"><input type="radio" name="q27" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q27"></span>
     </div>
     <div class="question">
-        <label class="q-text">28. I know my wife's hopes and wishes.</label>
+        <label class="q-text">{% trans "28. I know my wife's hopes and wishes." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q28" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q28" value="1"> 1</label>
@@ -567,13 +591,13 @@
             <label class="radio-option"><input type="radio" name="q28" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q28"></span>
     </div>
     <div class="question">
-        <label class="q-text">29. I know my wife very well.</label>
+        <label class="q-text">{% trans "29. I know my wife very well." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q29" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q29" value="1"> 1</label>
@@ -582,13 +606,13 @@
             <label class="radio-option"><input type="radio" name="q29" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q29"></span>
     </div>
     <div class="question">
-        <label class="q-text">30. I know my wife's friends and their social relationships.</label>
+        <label class="q-text">{% trans "30. I know my wife's friends and their social relationships." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q30" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q30" value="1"> 1</label>
@@ -597,13 +621,13 @@
             <label class="radio-option"><input type="radio" name="q30" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q30"></span>
     </div>
     <div class="question">
-        <label class="q-text">31. I feel aggressive when I argue with my wife.</label>
+        <label class="q-text">{% trans "31. I feel aggressive when I argue with my wife." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q31" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q31" value="1"> 1</label>
@@ -612,13 +636,13 @@
             <label class="radio-option"><input type="radio" name="q31" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q31"></span>
     </div>
     <div class="question">
-        <label class="q-text">32. When discussing with my wife, I usually use expressions such as "you always" or "you never".</label>
+        <label class="q-text">{% trans '32. When discussing with my wife, I usually use expressions such as "you always" or "you never".' %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q32" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q32" value="1"> 1</label>
@@ -627,13 +651,13 @@
             <label class="radio-option"><input type="radio" name="q32" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q32"></span>
     </div>
     <div class="question">
-        <label class="q-text">33. I can use negative statements about my wife's personality during our discussions.</label>
+        <label class="q-text">{% trans "33. I can use negative statements about my wife's personality during our discussions." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q33" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q33" value="1"> 1</label>
@@ -642,13 +666,13 @@
             <label class="radio-option"><input type="radio" name="q33" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q33"></span>
     </div>
     <div class="question">
-        <label class="q-text">34. I can use offensive expressions during our discussions.</label>
+        <label class="q-text">{% trans "34. I can use offensive expressions during our discussions." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q34" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q34" value="1"> 1</label>
@@ -657,13 +681,13 @@
             <label class="radio-option"><input type="radio" name="q34" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q34"></span>
     </div>
     <div class="question">
-        <label class="q-text">35. I can insult our discussions.</label>
+        <label class="q-text">{% trans "35. I can insult our discussions." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q35" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q35" value="1"> 1</label>
@@ -672,13 +696,13 @@
             <label class="radio-option"><input type="radio" name="q35" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q35"></span>
     </div>
     <div class="question">
-        <label class="q-text">36. I can be humiliating when we argue.</label>
+        <label class="q-text">{% trans "36. I can be humiliating when we argue." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q36" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q36" value="1"> 1</label>
@@ -687,13 +711,13 @@
             <label class="radio-option"><input type="radio" name="q36" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q36"></span>
     </div>
     <div class="question">
-        <label class="q-text">37. My argument with my wife is not calm.</label>
+        <label class="q-text">{% trans "37. My argument with my wife is not calm." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q37" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q37" value="1"> 1</label>
@@ -702,13 +726,13 @@
             <label class="radio-option"><input type="radio" name="q37" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q37"></span>
     </div>
     <div class="question">
-        <label class="q-text">38. I hate my wife's way of bringing it up.</label>
+        <label class="q-text">{% trans "38. I hate my wife's way of bringing it up." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q38" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q38" value="1"> 1</label>
@@ -717,13 +741,13 @@
             <label class="radio-option"><input type="radio" name="q38" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q38"></span>
     </div>
     <div class="question">
-        <label class="q-text">39. Fights often occur suddenly.</label>
+        <label class="q-text">{% trans "39. Fights often occur suddenly." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q39" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q39" value="1"> 1</label>
@@ -732,13 +756,13 @@
             <label class="radio-option"><input type="radio" name="q39" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q39"></span>
     </div>
     <div class="question">
-        <label class="q-text">40. We're just starting a fight before I know what's going on.</label>
+        <label class="q-text">{% trans "40. We're just starting a fight before I know what's going on." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q40" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q40" value="1"> 1</label>
@@ -747,13 +771,13 @@
             <label class="radio-option"><input type="radio" name="q40" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q40"></span>
     </div>
     <div class="question">
-        <label class="q-text">41. When I talk to my wife about something, my calm suddenly breaks.</label>
+        <label class="q-text">{% trans "41. When I talk to my wife about something, my calm suddenly breaks." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q41" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q41" value="1"> 1</label>
@@ -762,13 +786,13 @@
             <label class="radio-option"><input type="radio" name="q41" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q41"></span>
     </div>
     <div class="question">
-        <label class="q-text">42. When I argue with my wife, it only snaps in and I don't say a word.</label>
+        <label class="q-text">{% trans "42. When I argue with my wife, it only snaps in and I don't say a word." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q42" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q42" value="1"> 1</label>
@@ -777,13 +801,13 @@
             <label class="radio-option"><input type="radio" name="q42" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q42"></span>
     </div>
     <div class="question">
-        <label class="q-text">43. I'm mostly thirsty to calm the environment a little bit.</label>
+        <label class="q-text">{% trans "43. I'm mostly thirsty to calm the environment a little bit." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q43" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q43" value="1"> 1</label>
@@ -792,13 +816,13 @@
             <label class="radio-option"><input type="radio" name="q43" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q43"></span>
     </div>
     <div class="question">
-        <label class="q-text">44. Sometimes I think it's good for me to leave home for a while.</label>
+        <label class="q-text">{% trans "44. Sometimes I think it's good for me to leave home for a while." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q44" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q44" value="1"> 1</label>
@@ -807,13 +831,13 @@
             <label class="radio-option"><input type="radio" name="q44" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q44"></span>
     </div>
     <div class="question">
-        <label class="q-text">45. I'd rather stay silent than argue with my wife.</label>
+        <label class="q-text">{% trans "45. I'd rather stay silent than argue with my wife." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q45" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q45" value="1"> 1</label>
@@ -822,13 +846,13 @@
             <label class="radio-option"><input type="radio" name="q45" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q45"></span>
     </div>
     <div class="question">
-        <label class="q-text">46. Even if I'm right in the argument, I'm thirsty not to upset the other side.</label>
+        <label class="q-text">{% trans "46. Even if I'm right in the argument, I'm thirsty not to upset the other side." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q46" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q46" value="1"> 1</label>
@@ -837,13 +861,13 @@
             <label class="radio-option"><input type="radio" name="q46" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q46"></span>
     </div>
     <div class="question">
-        <label class="q-text">47. When I argue with my wife, I remain silent because I am afraid of not being able to control my anger.</label>
+        <label class="q-text">{% trans "47. When I argue with my wife, I remain silent because I am afraid of not being able to control my anger." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q47" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q47" value="1"> 1</label>
@@ -852,13 +876,13 @@
             <label class="radio-option"><input type="radio" name="q47" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q47"></span>
     </div>
     <div class="question">
-        <label class="q-text">48. I feel right in our discussions.</label>
+        <label class="q-text">{% trans "48. I feel right in our discussions." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q48" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q48" value="1"> 1</label>
@@ -867,13 +891,13 @@
             <label class="radio-option"><input type="radio" name="q48" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q48"></span>
     </div>
     <div class="question">
-        <label class="q-text">49. I have nothing to do with what I've been accused of.</label>
+        <label class="q-text">{% trans "49. I have nothing to do with what I've been accused of." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q49" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q49" value="1"> 1</label>
@@ -882,13 +906,13 @@
             <label class="radio-option"><input type="radio" name="q49" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q49"></span>
     </div>
     <div class="question">
-        <label class="q-text">50. I'm not actually the one who's guilty about what I'm accused of.</label>
+        <label class="q-text">{% trans "50. I'm not actually the one who's guilty about what I'm accused of." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q50" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q50" value="1"> 1</label>
@@ -897,13 +921,13 @@
             <label class="radio-option"><input type="radio" name="q50" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q50"></span>
     </div>
     <div class="question">
-        <label class="q-text">51. I'm not the one who's wrong about problems at home.</label>
+        <label class="q-text">{% trans "51. I'm not the one who's wrong about problems at home." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q51" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q51" value="1"> 1</label>
@@ -912,13 +936,13 @@
             <label class="radio-option"><input type="radio" name="q51" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q51"></span>
     </div>
     <div class="question">
-        <label class="q-text">52. I wouldn't hesitate to tell her about my wife's inadequacy.</label>
+        <label class="q-text">{% trans "52. I wouldn't hesitate to tell her about my wife's inadequacy." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q52" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q52" value="1"> 1</label>
@@ -927,13 +951,13 @@
             <label class="radio-option"><input type="radio" name="q52" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q52"></span>
     </div>
     <div class="question">
-        <label class="q-text">53. When I discuss it, I remind her of my wife's inadequate issues.</label>
+        <label class="q-text">{% trans "53. When I discuss it, I remind her of my wife's inadequate issues." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q53" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q53" value="1"> 1</label>
@@ -942,13 +966,13 @@
             <label class="radio-option"><input type="radio" name="q53" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q53"></span>
     </div>
     <div class="question">
-        <label class="q-text">54. I'm not afraid to tell her about my wife's incompetence.</label>
+        <label class="q-text">{% trans "54. I'm not afraid to tell her about my wife's incompetence." %}</label>
         <div class="radio-group">
             <label class="radio-option"><input type="radio" name="q54" value="0" required> 0</label>
             <label class="radio-option"><input type="radio" name="q54" value="1"> 1</label>
@@ -957,22 +981,125 @@
             <label class="radio-option"><input type="radio" name="q54" value="4"> 4</label>
         </div>
         <div class="radio-labels">
-            <span>Strongly Disagree</span>
-            <span>Strongly Agree</span>
+            <span>{% trans "Strongly Disagree" %}</span>
+            <span>{% trans "Strongly Agree" %}</span>
         </div>
         <span class="stat-feedback" id="stat-q54"></span>
     </div>            </div>
 
             <!-- Navigation Buttons -->
             <div class="nav-buttons">
-                <button type="button" id="prevBtn" onclick="changePage(-1)">Previous</button>
-                <span id="pageIndicator" style="align-self: center; font-weight: bold; color: #555;">Page 1 of 18</span>
-                <button type="button" id="nextBtn" onclick="changePage(1)">Next</button>
-                <button type="submit" id="submitBtn" style="display: none;">Submit Survey</button>
+                <button type="button" id="prevBtn" onclick="changePage(-1)">{% trans "Previous" %}</button>
+                <span id="pageIndicator" style="align-self: center; font-weight: bold; color: #555;">{% trans "Page 1 of 18" %}</span>
+                <button type="button" id="nextBtn" onclick="changePage(1)">{% trans "Next" %}</button>
+                <button type="submit" id="submitBtn" style="display: none;">{% trans "Submit Survey" %}</button>
             </div>
 
         </form>
     </main>
+
+    <script>
+        let currentPage = 0;
+        const questionsPerPage = 3;
+        let pages = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('surveyForm');
+            const questions = Array.from(document.querySelectorAll('.question'));
+            const totalQuestions = questions.length;
+            const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+            
+            for (let i = 0; i < totalPages; i++) {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'page';
+                if (i === 0) pageDiv.classList.add('active');
+                
+                for (let j = 0; j < questionsPerPage; j++) {
+                    const qIndex = i * questionsPerPage + j;
+                    if (qIndex < totalQuestions) {
+                        pageDiv.appendChild(questions[qIndex]);
+                    }
+                }
+                
+                form.insertBefore(pageDiv, document.querySelector('.nav-buttons'));
+                pages.push(pageDiv);
+            }
+            
+            updateButtons();
+
+            const isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+            
+            if (isAuthenticated) {
+                document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        const questionId = this.name;
+                        const answerValue = this.value;
+                        const span = document.getElementById('stat-' + questionId);
+
+                        fetch(`/api/stats/?question_id=${questionId}&answer_value=${answerValue}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.message) {
+                                    span.textContent = data.message;
+                                    span.classList.add('visible');
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                    });
+                });
+            }
+        });
+
+        function changePage(step) {
+            if (step === 1 && !validatePage(currentPage)) {
+                alert("{% trans 'Please answer all questions on this page.' %}");
+                return;
+            }
+
+            pages[currentPage].classList.remove('active');
+            currentPage += step;
+            pages[currentPage].classList.add('active');
+            
+            updateButtons();
+            window.scrollTo(0, 0);
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const pageIndicator = document.getElementById('pageIndicator');
+            
+            // Note: This logic for page indicator text update needs to handle translation in JS or be rendered by server.
+            // Simple way is to just keep numbers dynamic but text static.
+            // For now, let's just update numbers.
+            pageIndicator.textContent = `{% trans "Page" %} ${currentPage + 1} {% trans "of" %} ${pages.length}`;
+            prevBtn.style.visibility = (currentPage === 0) ? 'hidden' : 'visible';
+
+            if (currentPage === pages.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function validatePage(pageIndex) {
+            const page = pages[pageIndex];
+            const groups = new Set();
+            page.querySelectorAll('input[type="radio"]').forEach(input => groups.add(input.name));
+            
+            for (let name of groups) {
+                if (!page.querySelector(`input[name="${name}"]:checked`)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
 
     <script>
         let currentPage = 0;

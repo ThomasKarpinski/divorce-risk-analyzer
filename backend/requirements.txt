@@ -9,4 +9,6 @@ xgboost
 langchain
 langchain-ollama
 pytest
-scikit-learn
+pandas
+plotly
+statsmodels
