@@ -1,0 +1,743 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-25 22:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
+#: chatbot/views.py:60
+#, python-brace-format
+msgid "Low harmony (Score: {score}/4)."
+msgstr "Niska harmonia (Wynik: {score}/4)."
+
+#: chatbot/views.py:61
+#, python-brace-format
+msgid "Different happiness views (Score: {score}/4)."
+msgstr "Różne poglądy na szczęście (Wynik: {score}/4)."
+
+#: chatbot/views.py:62
+#, python-brace-format
+msgid "Sudden arguments (Score: {score}/4)."
+msgstr "Nagłe kłótnie (Wynik: {score}/4)."
+
+#: chatbot/views.py:65
+msgid "CRITICAL THREAT FACTORS: "
+msgstr "KRYTYCZNE CZYNNIKI RYZYKA: "
+
+#: chatbot/views.py:91
+#, python-brace-format
+msgid "Main Area of Neglect: '{question}' (Score: {score}/4 - Too Low)."
+msgstr "Główny obszar zaniedbania: '{question}' (Wynik: {score}/4 - Za niski)."
+
+#: chatbot/views.py:95
+#, python-brace-format
+msgid "Main Conflict Source: '{question}' (Score: {score}/4 - Too High)."
+msgstr "Główne źródło konfliktu: '{question}' (Wynik: {score}/4 - Za wysoki)."
+
+#: chatbot/views.py:98
+msgid " SPECIFIC AREAS TO DISCUSS: "
+msgstr " SZCZEGÓŁOWE OBSZARY DO OMÓWIENIA: "
+
+#: divorce_project/settings.py:143
+msgid "English"
+msgstr "Angielski"
+
+#: divorce_project/settings.py:144
+msgid "Polish"
+msgstr "Polski"
+
+#: predictions/views.py:89
+#, python-format, python-brace-format
+msgid "{percentage}% of people in our research answered the same."
+msgstr "{percentage}% osób w naszym badaniu udzieliło tej samej odpowiedzi."
+
+#: templates/chatbot.html:8
+msgid "AI Relationship Assistant"
+msgstr "Asystent ds. Relacji AI"
+
+#: templates/chatbot.html:153
+msgid "Relationship Assistant"
+msgstr "Asystent ds. Relacji"
+
+#: templates/chatbot.html:155
+msgid "📊 Dashboard"
+msgstr "📊 Panel"
+
+#: templates/chatbot.html:156 templates/result.html:142
+msgid "Back to Home"
+msgstr "Powrót do strony głównej"
+
+#: templates/chatbot.html:186
+msgid "Hello! I am your AI relationship assistant. How can I help you today?"
+msgstr ""
+"Witaj! Jestem twoim asystentem ds. relacji. W czym mogę ci dzisiaj pomóc?"
+
+#: templates/chatbot.html:200
+msgid "Type your message here..."
+msgstr "Wpisz swoją wiadomość..."
+
+#: templates/chatbot.html:201
+msgid "Send"
+msgstr "Wyślij"
+
+#: templates/dashboard.html:7
+msgid "Community Dashboard"
+msgstr "Panel Społeczności"
+
+#: templates/dashboard.html:84
+msgid "Community Insights"
+msgstr "Spostrzeżenia Społeczności"
+
+#: templates/dashboard.html:100
+msgid "Home"
+msgstr "Strona Główna"
+
+#: templates/dashboard.html:101
+msgid "New Survey"
+msgstr "Nowa Ankieta"
+
+#: templates/dashboard.html:102 templates/home.html:193
+msgid "Logout"
+msgstr "Wyloguj"
+
+#: templates/dashboard.html:110
+msgid "Please take the survey to unlock community insights."
+msgstr "Proszę wypełnić ankietę, aby odblokować spostrzeżenia społeczności."
+
+#: templates/dashboard.html:111
+msgid "Take Survey"
+msgstr "Wypełnij Ankietę"
+
+#: templates/dashboard.html:115
+msgid "How do you compare?"
+msgstr "Jak wypadasz na tle innych?"
+
+#: templates/dashboard.html:116
+msgid "Real-time data from all registered users."
+msgstr "Dane w czasie rzeczywistym od wszystkich zarejestrowanych użytkowników."
+
+#: templates/home.html:8
+msgid "Divorce Risk Survey - Welcome"
+msgstr "Badanie Ryzyka Rozwodu - Witaj"
+
+#: templates/home.html:168
+msgid "📊 Community Dashboard"
+msgstr "📊 Panel Społeczności"
+
+#: templates/home.html:189
+msgid "AI Assistant"
+msgstr "Asystent AI"
+
+#: templates/home.html:190
+msgid "Welcome"
+msgstr "Witaj"
+
+#: templates/home.html:197 templates/login.html:157 templates/result.html:137
+msgid "Register"
+msgstr "Zarejestruj się"
+
+#: templates/home.html:200 templates/login.html:124 templates/login.html:153
+msgid "Login"
+msgstr "Zaloguj"
+
+#: templates/home.html:207
+msgid "Welcome to the Divorce Risk Survey"
+msgstr "Witaj w Badaniu Ryzyka Rozwodu"
+
+#: templates/home.html:208
+msgid "Supporting couples in building healthy, loving relationships"
+msgstr "Wspieramy pary w budowaniu zdrowych, pełnych miłości relacji"
+
+#: templates/home.html:217
+msgid ""
+"Our goal is to prevent divorces and help people strengthen their "
+"relationships. We aim to support couples in maintaining healthy, loving "
+"connections and developing the skills needed to understand each other better "
+"and build a happier life together."
+msgstr ""
+"Naszym celem jest zapobieganie rozwodom i pomoc ludziom we wzmacnianiu ich "
+"relacji. Dążymy do wspierania par w utrzymywaniu zdrowych, pełnych miłości "
+"więzi oraz rozwijaniu umiejętności potrzebnych do lepszego zrozumienia się "
+"nawzajem i budowania szczęśliwszego życia razem."
+
+#: templates/home.html:221
+msgid ""
+"To make your love life better, we invite you to take this short quiz. Please "
+"read each question carefully and choose the option that best reflects your "
+"experience. Remember, there are no right or wrong answers—only honest ones. "
+"After completing the survey, you will be able to review the personalized "
+"results provided for you."
+msgstr ""
+"Aby poprawić twoje życie uczuciowe, zapraszamy do wzięcia udziału w tym "
+"krótkim quizie. Proszę przeczytaj uważnie każde pytanie i wybierz opcję, "
+"która najlepiej odzwierciedla twoje doświadczenie. Pamiętaj, nie ma dobrych "
+"ani złych odpowiedzi – są tylko szczere. Po ukończeniu ankiety będziesz mógł "
+"przejrzeć spersonalizowane wyniki przygotowane dla ciebie."
+
+#: templates/home.html:225
+msgid ""
+"We also encourage you to create an account to access detailed insights, "
+"additional data, and the opportunity to chat with our dedicated relationship-"
+"support chatbot, which can help explain specific areas of your results."
+msgstr ""
+"Zachęcamy również do założenia konta, aby uzyskać dostęp do szczegółowych "
+"spostrzeżeń, dodatkowych danych oraz możliwości rozmowy z naszym dedykowanym "
+"chatbotem wspierającym relacje, który pomoże wyjaśnić konkretne obszary "
+"twoich wyników."
+
+#: templates/home.html:232
+msgid "Start Survey"
+msgstr "Rozpocznij Ankietę"
+
+#: templates/home.html:237
+msgid ""
+"Begin the journey of understanding your relationship dynamics and improving "
+"your emotional connection."
+msgstr ""
+"Rozpocznij podróż zrozumienia dynamiki twojego związku i poprawy "
+"emocjonalnej więzi."
+
+#: templates/home.html:243
+msgid ""
+"© 2025 AGH-Love-Support-Research • Helping couples grow stronger together"
+msgstr ""
+"© 2025 AGH-Love-Support-Research • Pomagamy parom stawać się silniejszymi "
+"razem"
+
+#: templates/login.html:7
+msgid "Login - Divorce Risk Survey"
+msgstr "Logowanie - Badanie Ryzyka Rozwodu"
+
+#: templates/login.html:125
+msgid "Access your account to start the Divorce Risk Survey"
+msgstr "Uzyskaj dostęp do swojego konta, aby rozpocząć Badanie Ryzyka Rozwodu"
+
+#: templates/login.html:147 templates/register.html:148
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: templates/login.html:148
+msgid "Enter your username"
+msgstr "Wpisz swoją nazwę użytkownika"
+
+#: templates/login.html:150 templates/register.html:161
+msgid "Password"
+msgstr "Hasło"
+
+#: templates/login.html:151
+msgid "Enter your password"
+msgstr "Wpisz swoje hasło"
+
+#: templates/login.html:158 templates/register.html:186
+msgid "Continue as Guest"
+msgstr "Kontynuuj jako Gość"
+
+#: templates/register.html:7
+msgid "Register - Divorce Risk Survey"
+msgstr "Rejestracja - Badanie Ryzyka Rozwodu"
+
+#: templates/register.html:124
+msgid "Create Your Account"
+msgstr "Utwórz Swoje Konto"
+
+#: templates/register.html:125
+msgid "Join us and gain deeper insights into your relationship"
+msgstr "Dołącz do nas i zyskaj głębszy wgląd w swój związek"
+
+#: templates/register.html:149
+msgid "Choose a username"
+msgstr "Wybierz nazwę użytkownika"
+
+#: templates/register.html:151
+msgid "Date of Birth"
+msgstr "Data Urodzenia"
+
+#: templates/register.html:154
+msgid "Gender"
+msgstr "Płeć"
+
+#: templates/register.html:156
+msgid "Select gender"
+msgstr "Wybierz płeć"
+
+#: templates/register.html:157
+msgid "Male"
+msgstr "Mężczyzna"
+
+#: templates/register.html:158
+msgid "Female"
+msgstr "Kobieta"
+
+#: templates/register.html:162
+msgid "Create a password"
+msgstr "Utwórz hasło"
+
+#: templates/register.html:164
+msgid "Education"
+msgstr "Wykształcenie"
+
+#: templates/register.html:166
+msgid "Select education level"
+msgstr "Wybierz poziom wykształcenia"
+
+#: templates/register.html:167
+msgid "Primary"
+msgstr "Podstawowe"
+
+#: templates/register.html:168
+msgid "Secondary"
+msgstr "Średnie"
+
+#: templates/register.html:169
+msgid "Bachelor"
+msgstr "Licencjat"
+
+#: templates/register.html:170
+msgid "Master"
+msgstr "Magister"
+
+#: templates/register.html:171
+msgid "PhD"
+msgstr "Doktorat"
+
+#: templates/register.html:174
+msgid "Residence"
+msgstr "Miejsce zamieszkania"
+
+#: templates/register.html:176
+msgid "Select city size"
+msgstr "Wybierz wielkość miasta"
+
+#: templates/register.html:177
+msgid "Small City / Town"
+msgstr "Małe Miasto / Miasteczko"
+
+#: templates/register.html:178
+msgid "Large City"
+msgstr "Duże Miasto"
+
+#: templates/register.html:181
+msgid "Create Account"
+msgstr "Utwórz Konto"
+
+#: templates/register.html:185
+msgid "Back to Login"
+msgstr "Powrót do Logowania"
+
+#: templates/result.html:7
+msgid "Divorce Risk Survey - Results"
+msgstr "Badanie Ryzyka Rozwodu - Wyniki"
+
+#: templates/result.html:78
+msgid "Your Results"
+msgstr "Twoje Wyniki"
+
+#: templates/result.html:97
+msgid "📊 View Community Dashboard"
+msgstr "📊 Zobacz Panel Społeczności"
+
+#: templates/result.html:103
+msgid "Risk Assessment Complete"
+msgstr "Ocena Ryzyka Zakończona"
+
+#: templates/result.html:111
+msgid "Low Risk - Keep it up!"
+msgstr "Niskie Ryzyko - Tak trzymaj!"
+
+#: templates/result.html:113
+msgid "Moderate Risk - Some attention needed."
+msgstr "Umiarkowane Ryzyko - Wymagana uwaga."
+
+#: templates/result.html:115
+msgid "High Risk - Consider professional support."
+msgstr "Wysokie Ryzyko - Rozważ profesjonalne wsparcie."
+
+#: templates/result.html:125
+msgid "Did you know?"
+msgstr "Czy wiedziałeś?"
+
+#: templates/result.html:132
+msgid "Since you are logged in, this result has been saved to your profile."
+msgstr "Ponieważ jesteś zalogowany, ten wynik został zapisany w twoim profilu."
+
+#: templates/result.html:134
+msgid "Discuss with AI Assistant"
+msgstr "Porozmawiaj z Asystentem AI"
+
+#: templates/result.html:137
+msgid "to save your results and track your progress over time."
+msgstr "aby zapisać swoje wyniki i śledzić postępy w czasie."
+
+#: templates/survey.html:7 templates/survey.html:153
+msgid "Divorce Risk Survey"
+msgstr "Badanie Ryzyka Rozwodu"
+
+#: templates/survey.html:154
+msgid "Scale: 0 (Strongly Disagree) to 4 (Strongly Agree)"
+msgstr ""
+"Skala: 0 (Zdecydowanie się nie zgadzam) do 4 (Zdecydowanie się zgadzam)"
+
+#: templates/survey.html:180
+msgid ""
+"1. When one of our apologies apologizes when our discussions go in a bad "
+"direction, the issue does not extend."
+msgstr ""
+"1. Kiedy jedno z nas przeprasza, gdy nasze dyskusje zmierzają w złym "
+"kierunku, problem się nie rozszerza."
+
+#: templates/survey.html:189 templates/survey.html:204
+#: templates/survey.html:219 templates/survey.html:234
+#: templates/survey.html:249 templates/survey.html:264
+#: templates/survey.html:279 templates/survey.html:294
+#: templates/survey.html:309 templates/survey.html:324
+#: templates/survey.html:339 templates/survey.html:354
+#: templates/survey.html:369 templates/survey.html:384
+#: templates/survey.html:399 templates/survey.html:414
+#: templates/survey.html:429 templates/survey.html:444
+#: templates/survey.html:459 templates/survey.html:474
+#: templates/survey.html:489 templates/survey.html:504
+#: templates/survey.html:519 templates/survey.html:534
+#: templates/survey.html:549 templates/survey.html:564
+#: templates/survey.html:579 templates/survey.html:594
+#: templates/survey.html:609 templates/survey.html:624
+#: templates/survey.html:639 templates/survey.html:654
+#: templates/survey.html:669 templates/survey.html:684
+#: templates/survey.html:699 templates/survey.html:714
+#: templates/survey.html:729 templates/survey.html:744
+#: templates/survey.html:759 templates/survey.html:774
+#: templates/survey.html:789 templates/survey.html:804
+#: templates/survey.html:819 templates/survey.html:834
+#: templates/survey.html:849 templates/survey.html:864
+#: templates/survey.html:879 templates/survey.html:894
+#: templates/survey.html:909 templates/survey.html:924
+#: templates/survey.html:939 templates/survey.html:954
+#: templates/survey.html:969 templates/survey.html:984
+msgid "Strongly Disagree"
+msgstr "Zdecydowanie się nie zgadzam"
+
+#: templates/survey.html:190 templates/survey.html:205
+#: templates/survey.html:220 templates/survey.html:235
+#: templates/survey.html:250 templates/survey.html:265
+#: templates/survey.html:280 templates/survey.html:295
+#: templates/survey.html:310 templates/survey.html:325
+#: templates/survey.html:340 templates/survey.html:355
+#: templates/survey.html:370 templates/survey.html:385
+#: templates/survey.html:400 templates/survey.html:415
+#: templates/survey.html:430 templates/survey.html:445
+#: templates/survey.html:460 templates/survey.html:475
+#: templates/survey.html:490 templates/survey.html:505
+#: templates/survey.html:520 templates/survey.html:535
+#: templates/survey.html:550 templates/survey.html:565
+#: templates/survey.html:580 templates/survey.html:595
+#: templates/survey.html:610 templates/survey.html:625
+#: templates/survey.html:640 templates/survey.html:655
+#: templates/survey.html:670 templates/survey.html:685
+#: templates/survey.html:700 templates/survey.html:715
+#: templates/survey.html:730 templates/survey.html:745
+#: templates/survey.html:760 templates/survey.html:775
+#: templates/survey.html:790 templates/survey.html:805
+#: templates/survey.html:820 templates/survey.html:835
+#: templates/survey.html:850 templates/survey.html:865
+#: templates/survey.html:880 templates/survey.html:895
+#: templates/survey.html:910 templates/survey.html:925
+#: templates/survey.html:940 templates/survey.html:955
+#: templates/survey.html:970 templates/survey.html:985
+msgid "Strongly Agree"
+msgstr "Zdecydowanie się zgadzam"
+
+#: templates/survey.html:195
+msgid ""
+"2. I know we can ignore our differences, even if things get hard sometimes."
+msgstr ""
+"2. Wiem, że możemy ignorować nasze różnice, nawet jeśli czasami jest ciężko."
+
+#: templates/survey.html:210
+msgid ""
+"3. When we need it, we can take our discussions with my wife from the "
+"beginning and correct it."
+msgstr ""
+"3. Kiedy tego potrzebujemy, możemy zacząć nasze dyskusje z moją żoną od "
+"początku i je naprawić."
+
+#: templates/survey.html:225
+msgid ""
+"4. When I argue with my wife, it will eventually work for me to contact him."
+msgstr ""
+"4. Kiedy kłócę się z moją żoną, w końcu udaje mi się z nią skontaktować."
+
+#: templates/survey.html:240
+msgid "5. The time I spent with my wife is special for us."
+msgstr "5. Czas, który spędzam z moją żoną, jest dla nas wyjątkowy."
+
+#: templates/survey.html:255
+msgid "6. We don't have time at home as partners."
+msgstr "6. Nie mamy czasu w domu jako partnerzy."
+
+#: templates/survey.html:270
+msgid ""
+"7. We are like two strangers who share the same environment at home rather "
+"than family."
+msgstr ""
+"7. Jesteśmy jak dwoje obcych ludzi dzielących to samo środowisko w domu, a "
+"nie jak rodzina."
+
+#: templates/survey.html:285
+msgid "8. I enjoy our holidays with my wife."
+msgstr "8. Lubię nasze wakacje z moją żoną."
+
+#: templates/survey.html:300
+msgid "9. I enjoy traveling with my wife."
+msgstr "9. Lubię podróżować z moją żoną."
+
+#: templates/survey.html:315
+msgid "10. My wife and most of our goals are common."
+msgstr "10. Moja żona i większość naszych celów są wspólne."
+
+#: templates/survey.html:330
+msgid ""
+"11. I think that one day in the future, when I look back, I see that my wife "
+"and I are in harmony with each other."
+msgstr ""
+"11. Myślę, że pewnego dnia w przyszłości, kiedy spojrzę wstecz, zobaczę, że "
+"moja żona i ja żyjemy ze sobą w harmonii."
+
+#: templates/survey.html:345
+msgid "12. My wife and I have similar values in terms of personal freedom."
+msgstr "12. Moja żona i ja mamy podobne wartości w kwestii wolności osobistej."
+
+#: templates/survey.html:360
+msgid "13. My husband and I have similar entertainment."
+msgstr "13. Mój mąż/żona i ja mamy podobne rozrywki."
+
+#: templates/survey.html:375
+msgid ""
+"14. Most of our goals for people (children, friends, etc.) are the same."
+msgstr ""
+"14. Większość naszych celów dotyczących ludzi (dzieci, przyjaciele itp.) "
+"jest taka sama."
+
+#: templates/survey.html:390
+msgid "15. Our dreams of living with my wife are similar and harmonious"
+msgstr "15. Nasze marzenia o życiu z moją żoną są podobne i harmonijne"
+
+#: templates/survey.html:405
+msgid "16. We're compatible with my wife about what love should be"
+msgstr "16. Jesteśmy zgodni z moją żoną co do tego, czym powinna być miłość"
+
+#: templates/survey.html:420
+msgid "17. We share the same views with my wife about being happy in your life"
+msgstr ""
+"17. Podzielamy te same poglądy z moją żoną na temat bycia szczęśliwym w życiu"
+
+#: templates/survey.html:435
+msgid "18. My wife and I have similar ideas about how marriage should be"
+msgstr ""
+"18. Moja żona i ja mamy podobne wyobrażenia o tym, jak powinno wyglądać "
+"małżeństwo"
+
+#: templates/survey.html:450
+msgid ""
+"19. My wife and I have similar ideas about how roles should be in marriage"
+msgstr ""
+"19. Moja żona i ja mamy podobne wyobrażenia o tym, jakie powinny być role w "
+"małżeństwie"
+
+#: templates/survey.html:465
+msgid "20. My wife and I have similar values in trust"
+msgstr "20. Moja żona i ja mamy podobne wartości w kwestii zaufania"
+
+#: templates/survey.html:480
+msgid "21. I know exactly what my wife likes."
+msgstr "21. Wiem dokładnie, co lubi moja żona."
+
+#: templates/survey.html:495
+msgid "22. I know how my wife wants to be taken care of when she's sick."
+msgstr "22. Wiem, jak moja żona chce być opiekowana, gdy jest chora."
+
+#: templates/survey.html:510
+msgid "23. I know my wife's favorite food."
+msgstr "23. Znam ulubione jedzenie mojej żony."
+
+#: templates/survey.html:525
+msgid "24. I can tell you what kind of stress my wife is facing in her life."
+msgstr "24. Potrafię powiedzieć, z jakim stresem moja żona mierzy się w życiu."
+
+#: templates/survey.html:540
+msgid "25. I have knowledge of my wife's inner world."
+msgstr "25. Mam wiedzę o wewnętrznym świecie mojej żony."
+
+#: templates/survey.html:555
+msgid "26. I know my wife's basic concerns."
+msgstr "26. Znam podstawowe troski mojej żony."
+
+#: templates/survey.html:570
+msgid "27. I know what my wife's current sources of stress are."
+msgstr "27. Wiem, jakie są obecne źródła stresu mojej żony."
+
+#: templates/survey.html:585
+msgid "28. I know my wife's hopes and wishes."
+msgstr "28. Znam nadzieje i życzenia mojej żony."
+
+#: templates/survey.html:600
+msgid "29. I know my wife very well."
+msgstr "29. Znam moją żonę bardzo dobrze."
+
+#: templates/survey.html:615
+msgid "30. I know my wife's friends and their social relationships."
+msgstr "30. Znam przyjaciół mojej żony i ich relacje społeczne."
+
+#: templates/survey.html:630
+msgid "31. I feel aggressive when I argue with my wife."
+msgstr "31. Czuję się agresywny, gdy kłócę się z moją żoną."
+
+#: templates/survey.html:645
+msgid ""
+"32. When discussing with my wife, I usually use expressions such as \"you "
+"always\" or \"you never\"."
+msgstr ""
+"32. Dyskutując z moją żoną, zazwyczaj używam wyrażeń takich jak \"ty "
+"zawsze\" lub \"ty nigdy\"."
+
+#: templates/survey.html:660
+msgid ""
+"33. I can use negative statements about my wife's personality during our "
+"discussions."
+msgstr ""
+"33. Podczas naszych dyskusji mogę używać negatywnych stwierdzeń na temat "
+"osobowości mojej żony."
+
+#: templates/survey.html:675
+msgid "34. I can use offensive expressions during our discussions."
+msgstr "34. Podczas naszych dyskusji mogę używać obraźliwych wyrażeń."
+
+#: templates/survey.html:690
+msgid "35. I can insult our discussions."
+msgstr "35. Mogę obrażać nasze dyskusje."
+
+#: templates/survey.html:705
+msgid "36. I can be humiliating when we argue."
+msgstr "36. Mogę być upokarzający, gdy się kłócimy."
+
+#: templates/survey.html:720
+msgid "37. My argument with my wife is not calm."
+msgstr "37. Moja kłótnia z moją żoną nie jest spokojna."
+
+#: templates/survey.html:735
+msgid "38. I hate my wife's way of bringing it up."
+msgstr "38. Nienawidzę sposobu, w jaki moja żona to porusza."
+
+#: templates/survey.html:750
+msgid "39. Fights often occur suddenly."
+msgstr "39. Kłótnie często zdarzają się nagle."
+
+#: templates/survey.html:765
+msgid "40. We're just starting a fight before I know what's going on."
+msgstr "40. Zaczynamy kłótnię, zanim zorientuję się, o co chodzi."
+
+#: templates/survey.html:780
+msgid "41. When I talk to my wife about something, my calm suddenly breaks."
+msgstr "41. Kiedy rozmawiam z żoną o czymś, mój spokój nagle pęka."
+
+#: templates/survey.html:795
+msgid "42. When I argue with my wife, it only snaps in and I don't say a word."
+msgstr ""
+"42. Kiedy kłócę się z żoną, to tylko pęka we mnie i nie mówię ani słowa."
+
+#: templates/survey.html:810
+msgid "43. I'm mostly thirsty to calm the environment a little bit."
+msgstr "43. Głównie pragnę trochę uspokoić otoczenie."
+
+#: templates/survey.html:825
+msgid "44. Sometimes I think it's good for me to leave home for a while."
+msgstr "44. Czasami myślę, że dobrze mi zrobi wyjście z domu na chwilę."
+
+#: templates/survey.html:840
+msgid "45. I'd rather stay silent than argue with my wife."
+msgstr "45. Wolę milczeć niż kłócić się z żoną."
+
+#: templates/survey.html:855
+msgid ""
+"46. Even if I'm right in the argument, I'm thirsty not to upset the other "
+"side."
+msgstr ""
+"46. Nawet jeśli mam rację w kłótni, pragnę nie denerwować drugiej strony."
+
+#: templates/survey.html:870
+msgid ""
+"47. When I argue with my wife, I remain silent because I am afraid of not "
+"being able to control my anger."
+msgstr ""
+"47. Kiedy kłócę się z żoną, milczę, ponieważ boję się, że nie będę w stanie "
+"zapanować nad gniewem."
+
+#: templates/survey.html:885
+msgid "48. I feel right in our discussions."
+msgstr "48. Czuję się dobrze w naszych dyskusjach."
+
+#: templates/survey.html:900
+msgid "49. I have nothing to do with what I've been accused of."
+msgstr "49. Nie mam nic wspólnego z tym, o co mnie oskarżono."
+
+#: templates/survey.html:915
+msgid "50. I'm not actually the one who's guilty about what I'm accused of."
+msgstr "50. W rzeczywistości nie jestem winny tego, o co mnie oskarżono."
+
+#: templates/survey.html:930
+msgid "51. I'm not the one who's wrong about problems at home."
+msgstr "51. To nie ja mylę się co do problemów w domu."
+
+#: templates/survey.html:945
+msgid "52. I wouldn't hesitate to tell her about my wife's inadequacy."
+msgstr "52. Nie wahałbym się powiedzieć jej o niekompetencji mojej żony."
+
+#: templates/survey.html:960
+msgid "53. When I discuss it, I remind her of my wife's inadequate issues."
+msgstr ""
+"53. Dyskutując o tym, przypominam jej o nieodpowiednich kwestiach mojej żony."
+
+#: templates/survey.html:975
+msgid "54. I'm not afraid to tell her about my wife's incompetence."
+msgstr "54. Nie boję się powiedzieć jej o niekompetencji mojej żony."
+
+#: templates/survey.html:992
+msgid "Previous"
+msgstr "Poprzednia"
+
+#: templates/survey.html:993
+msgid "Page 1 of 18"
+msgstr "Strona 1 z 18"
+
+#: templates/survey.html:994
+msgid "Next"
+msgstr "Następna"
+
+#: templates/survey.html:995
+msgid "Submit Survey"
+msgstr "Prześlij Ankietę"
+
+#: templates/survey.html:1055
+msgid "Please answer all questions on this page."
+msgstr "Proszę odpowiedzieć na wszystkie pytania na tej stronie."
+
+#: templates/survey.html:1076
+msgid "Page"
+msgstr "Strona"
+
+#: templates/survey.html:1076
+msgid "of"
+msgstr "z"

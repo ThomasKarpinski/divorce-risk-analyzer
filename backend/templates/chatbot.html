@@ -1,10 +1,11 @@
 
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Relationship Assistant</title>
+    <title>{% trans "AI Relationship Assistant" %}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,6 +23,13 @@
             padding: 1rem;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
         }
 
         main {
@@ -142,8 +150,27 @@
 <body>
 
     <header>
-        <h1>Relationship Assistant</h1>
-        <a href="{% url 'home' %}" style="color: white; text-decoration: none; font-size: 0.9rem;">Back to Home</a>
+        <h1>{% trans "Relationship Assistant" %}</h1>
+        <div style="margin-top: 10px;">
+            <a href="{% url 'dashboard' %}" style="color: white; text-decoration: none; font-size: 0.9rem; margin-right: 15px; font-weight: bold;">{% trans "📊 Dashboard" %}</a>
+            <a href="{% url 'home' %}" style="color: white; text-decoration: none; font-size: 0.9rem;">{% trans "Back to Home" %}</a>
+        </div>
+        <div class="lang-switcher">
+            <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 5px; border: none; background: rgba(255,255,255,0.8);">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.code|upper }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
     </header>
 
     <main>
@@ -156,7 +183,7 @@
                 {% endfor %}
             {% else %}
             <div class="message ai-message">
-                Hello! I am your AI relationship assistant. How can I help you today?
+                {% trans "Hello! I am your AI relationship assistant. How can I help you today?" %}
             </div>
             {% endif %}
         </div>
@@ -170,8 +197,8 @@
         </div>
 
         <form id="chat-form" class="input-area">
-            <input type="text" id="user-input" placeholder="Type your message here..." required autocomplete="off">
-            <button type="submit">Send</button>
+            <input type="text" id="user-input" placeholder="{% trans "Type your message here..." %}" required autocomplete="off">
+            <button type="submit">{% trans "Send" %}</button>
         </form>
     </main>
 

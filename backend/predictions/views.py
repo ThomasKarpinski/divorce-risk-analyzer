@@ -5,8 +5,10 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.utils.translation import gettext as _
 from .models import Prediction, SurveyAnswer
 from .serializers import PredictionSerializer, SurveyAnswerSerializer
 import random
@@ -15,6 +17,12 @@ import joblib
 import numpy as np
 
 from core.models import DivorceData
+
+from django.db.models import F
+from datetime import date
+import pandas as pd
+import plotly.express as px
+import plotly.io as pio
 
 User = get_user_model()
 
@@ -78,7 +86,7 @@ def calculate_statistic(request):
         'question_id': question_id,
         'answer_value': val,
         'percentage': percentage,
-        'message': f"{percentage}% of people in our research answered the same."
+        'message': _("{percentage}% of people in our research answered the same.").format(percentage=percentage)
     })
 
 def result_view(request):
@@ -162,6 +170,81 @@ def result_view(request):
         return render(request, 'result.html', context)
 
     return redirect('survey')
+
+
+@login_required
+def dashboard_view(request):
+    # Checking if user has completed survey
+    user_predictions = Prediction.objects.filter(user=request.user)
+    if not user_predictions.exists():
+        return render(request, 'dashboard.html', {
+            'no_data': True,
+            'message': "You need to complete the survey first to see the community dashboard."
+        })
+
+    predictions = Prediction.objects.filter(user__isnull=False).select_related('user')
+    
+    data = []
+    for pred in predictions:
+        u = pred.user
+        age = None
+        if u.birthdate:
+            today = date.today()
+            age = today.year - u.birthdate.year - ((today.month, today.day) < (u.birthdate.month, u.birthdate.day))
+        
+        data.append({
+            'Risk Score': pred.risk_score * 100,
+            'Gender': u.gender if u.gender else 'Unknown',
+            'Education': u.education if u.education else 'Unknown',
+            'Age': age if age is not None else 0
+        })
+
+    df = pd.DataFrame(data)
+
+    # generating Charts
+    graphs = []
+
+    # Chart A: Risk Score by Gender (Box Plot)
+    if not df.empty and 'Gender' in df.columns:
+        fig_gender = px.box(
+            df, x='Gender', y='Risk Score', 
+            title="Divorce Risk Distribution by Gender",
+            color='Gender',
+            points="all"
+        )
+        graphs.append(pio.to_html(fig_gender, full_html=False))
+
+    # Chart B: Risk Score by Education (Bar Chart - Average)
+    if not df.empty and 'Education' in df.columns:
+        edu_order = ['primary', 'secondary', 'bachelor', 'master', 'phd']
+        # only existing ones
+        avg_risk_edu = df.groupby('Education')['Risk Score'].mean().reset_index()
+        fig_edu = px.bar(
+            avg_risk_edu, x='Education', y='Risk Score',
+            title="Average Risk Score by Education Level",
+            color='Risk Score',
+            category_orders={"Education": edu_order}
+        )
+        graphs.append(pio.to_html(fig_edu, full_html=False))
+
+    # Chart C: Risk Score vs Age (Scatter Plot)
+    if not df.empty and 'Age' in df.columns:
+        # Filter out 0 age if irrelevant
+        age_df = df[df['Age'] > 0]
+        fig_age = px.scatter(
+            age_df, x='Age', y='Risk Score',
+            title="Risk Score vs. Age",
+            trendline="ols" if len(age_df) > 1 else None, # Adding trendline if enough data
+            color='Gender',
+            range_x=[0, 100]
+        )
+        graphs.append(pio.to_html(fig_age, full_html=False))
+
+    context = {
+        'graphs': graphs
+    }
+
+    return render(request, 'dashboard.html', context)
 
 # API VIEWS (Existing)
 class PredictView(APIView):

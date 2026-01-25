@@ -1,9 +1,10 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Divorce Risk Survey - Results</title>
+    <title>{% trans "Divorce Risk Survey - Results" %}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,6 +18,13 @@
             color: white;
             padding: 1.5rem;
             text-align: center;
+            position: relative;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
         }
 
         main {
@@ -67,11 +75,32 @@
 <body>
 
     <header>
-        <h1>Your Results</h1>
+        <h1>{% trans "Your Results" %}</h1>
+        <div class="lang-switcher">
+            <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 5px; border: none; background: rgba(255,255,255,0.8); color: #333;">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.code|upper }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        {% if user.is_authenticated %}
+            <div style="margin-top: 10px;">
+                <a href="{% url 'dashboard' %}" style="color: white; text-decoration: none; font-weight: bold; border: 1px solid white; padding: 5px 10px; border-radius: 4px;">{% trans "📊 View Community Dashboard" %}</a>
+            </div>
+        {% endif %}
     </header>
 
     <main>
-        <h2>Risk Assessment Complete</h2>
+        <h2>{% trans "Risk Assessment Complete" %}</h2>
         
         <div class="result-score" style="color: {% if risk_score < 30 %}#2ecc71{% elif risk_score < 70 %}#f1c40f{% else %}#e74c3c{% endif %};">
             {{ risk_score|floatformat:1 }}%
@@ -79,11 +108,11 @@
 
         <h3 style="margin-top: -1rem; margin-bottom: 2rem; color: #555;">
             {% if risk_score < 30 %}
-                Low Risk - Keep it up!
+                {% trans "Low Risk - Keep it up!" %}
             {% elif risk_score < 70 %}
-                Moderate Risk - Some attention needed.
+                {% trans "Moderate Risk - Some attention needed." %}
             {% else %}
-                High Risk - Consider professional support.
+                {% trans "High Risk - Consider professional support." %}
             {% endif %}
         </h3>
 
@@ -93,24 +122,24 @@
 
         {% if statistics %}
         <div style="margin-top: 2rem; padding: 1rem; background-color: #f9f9f9; border-radius: 8px;">
-            <h3>Did you know?</h3>
+            <h3>{% trans "Did you know?" %}</h3>
             <p>{{ statistics.q1_same_choice_percentage }}</p>
         </div>
         {% endif %}
 
         {% if user.is_authenticated %}
             <p style="margin-top: 2rem;">
-                Since you are logged in, this result has been saved to your profile.
+                {% trans "Since you are logged in, this result has been saved to your profile." %}
             </p>
-            <a href="{% url 'chatbot' %}" class="btn" style="background-color: #ff8fa3; margin-top: 10px;">Discuss with AI Assistant</a>
+            <a href="{% url 'chatbot' %}" class="btn" style="background-color: #ff8fa3; margin-top: 10px;">{% trans "Discuss with AI Assistant" %}</a>
         {% else %}
             <p style="margin-top: 2rem; color: #666;">
-                <a href="{% url 'register' %}" style="color: #ff6b81;">Register</a> to save your results and track your progress over time.
+                <a href="{% url 'register' %}" style="color: #ff6b81;">{% trans "Register" %}</a> {% trans "to save your results and track your progress over time." %}
             </p>
         {% endif %}
 
         <br><br>
-        <a href="{% url 'home' %}" class="btn">Back to Home</a>
+        <a href="{% url 'home' %}" class="btn">{% trans "Back to Home" %}</a>
     </main>
 
 </body>

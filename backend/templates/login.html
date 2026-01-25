@@ -1,9 +1,10 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Divorce Risk Survey</title>
+    <title>{% trans "Login - Divorce Risk Survey" %}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,6 +18,13 @@
             color: white;
             padding: 2rem 1rem;
             text-align: center;
+            position: relative;
+        }
+        
+        .lang-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
         }
 
         header h1 {
@@ -113,25 +121,41 @@
 <body>
 
     <header>
-        <h1>Login</h1>
-        <p>Access your account to start the Divorce Risk Survey</p>
+        <h1>{% trans "Login" %}</h1>
+        <p>{% trans "Access your account to start the Divorce Risk Survey" %}</p>
+        <div class="lang-switcher">
+            <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 5px; border: none; background: rgba(255,255,255,0.8); color: #333;">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.code|upper }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
     </header>
 
     <main>
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <label for="username">{% trans "Username" %}</label>
+            <input type="text" id="username" name="username" placeholder="{% trans "Enter your username" %}" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <label for="password">{% trans "Password" %}</label>
+            <input type="password" id="password" name="password" placeholder="{% trans "Enter your password" %}" required>
 
-            <button type="submit">Login</button>
+            <button type="submit">{% trans "Login" %}</button>
         </form>
 
         <div class="links">
-            <a href="{% url 'register' %}">Register</a> •
-            <a href="{% url 'survey' %}">Continue as Guest</a>
+            <a href="{% url 'register' %}">{% trans "Register" %}</a> •
+            <a href="{% url 'survey' %}">{% trans "Continue as Guest" %}</a>
         </div>
     </main>
 

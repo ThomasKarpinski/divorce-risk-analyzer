@@ -8,3 +8,7 @@ joblib
 xgboost
 langchain
 langchain-ollama
+pytest
+pandas
+plotly
+statsmodels
