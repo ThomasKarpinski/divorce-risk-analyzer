@@ -1070,111 +1070,11 @@
             const submitBtn = document.getElementById('submitBtn');
             const pageIndicator = document.getElementById('pageIndicator');
             
-            // Note: This logic for page indicator text update needs to handle translation in JS or be rendered by server.
-            // Simple way is to just keep numbers dynamic but text static.
-            // For now, let's just update numbers.
             pageIndicator.textContent = `{% trans "Page" %} ${currentPage + 1} {% trans "of" %} ${pages.length}`;
             prevBtn.style.visibility = (currentPage === 0) ? 'hidden' : 'visible';
 
-            if (currentPage === pages.length - 1) {
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'block';
-            } else {
-                nextBtn.style.display = 'block';
-                submitBtn.style.display = 'none';
-            }
-        }
-
-        function validatePage(pageIndex) {
-            const page = pages[pageIndex];
-            const groups = new Set();
-            page.querySelectorAll('input[type="radio"]').forEach(input => groups.add(input.name));
-            
-            for (let name of groups) {
-                if (!page.querySelector(`input[name="${name}"]:checked`)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    </script>
-</body>
-</html>
-
-    <script>
-        let currentPage = 0;
-        const questionsPerPage = 3;
-        let pages = [];
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('surveyForm');
-            const questions = Array.from(document.querySelectorAll('.question'));
-            const totalQuestions = questions.length;
-            const totalPages = Math.ceil(totalQuestions / questionsPerPage);
-            
-            for (let i = 0; i < totalPages; i++) {
-                const pageDiv = document.createElement('div');
-                pageDiv.className = 'page';
-                if (i === 0) pageDiv.classList.add('active');
-                
-                for (let j = 0; j < questionsPerPage; j++) {
-                    const qIndex = i * questionsPerPage + j;
-                    if (qIndex < totalQuestions) {
-                        pageDiv.appendChild(questions[qIndex]);
-                    }
-                }
-                
-                form.insertBefore(pageDiv, document.querySelector('.nav-buttons'));
-                pages.push(pageDiv);
-            }
-            
-            updateButtons();
-
-            const isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
-            
-            if (isAuthenticated) {
-                document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                    radio.addEventListener('change', function() {
-                        const questionId = this.name;
-                        const answerValue = this.value;
-                        const span = document.getElementById('stat-' + questionId);
-
-                        fetch(`/api/stats/?question_id=${questionId}&answer_value=${answerValue}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.message) {
-                                    span.textContent = data.message;
-                                    span.classList.add('visible');
-                                }
-                            })
-                            .catch(error => console.error('Error:', error));
-                    });
-                });
-            }
-        });
-
-        function changePage(step) {
-            if (step === 1 && !validatePage(currentPage)) {
-                alert("Please answer all questions on this page.");
-                return;
-            }
-
-            pages[currentPage].classList.remove('active');
-            currentPage += step;
-            pages[currentPage].classList.add('active');
-            
-            updateButtons();
-            window.scrollTo(0, 0);
-        }
-
-        function updateButtons() {
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const submitBtn = document.getElementById('submitBtn');
-            const pageIndicator = document.getElementById('pageIndicator');
-            
-            pageIndicator.textContent = `Page ${currentPage + 1} of ${pages.length}`;
-            prevBtn.style.visibility = (currentPage === 0) ? 'hidden' : 'visible';
+            // Check for mobile size
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
             if (currentPage === pages.length - 1) {
                 nextBtn.style.display = 'none';
@@ -1182,6 +1082,14 @@
             } else {
                 nextBtn.style.display = 'block';
                 submitBtn.style.display = 'none';
+
+                if (isMobile) {
+                    nextBtn.textContent = '>';
+                    prevBtn.textContent = '<';
+                } else {
+                    nextBtn.textContent = '{% trans "Next" %}';
+                    prevBtn.textContent = '{% trans "Previous" %}';
+                }
             }
         }
 

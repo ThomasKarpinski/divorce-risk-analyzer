@@ -2,7 +2,7 @@
 
 # Configuration
 # Adjust these paths relative to where the script runs or use absolute paths
-BACKUP_DIR="./backups"
+BACKUP_DIR="/srv/dbdata/divorce_data"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 CONTAINER_NAME="divorce-risk-analyzer-db-1" # Check 'docker ps' on server to confirm name, or use docker compose
 DB_USER="admin"

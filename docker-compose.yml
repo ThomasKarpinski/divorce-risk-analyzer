@@ -19,7 +19,7 @@ services:
   web:
     build: ./backend
     restart: always
-    command: bash -c "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 --timeout 300 divorce_project.wsgi:application"
+    command: bash -c "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn --bind 0.0.0.0:8000 --timeout 300 divorce_project.wsgi:application"
     volumes:
       # We map the code "live", so I can program without restarting the container
       - ./backend:/app

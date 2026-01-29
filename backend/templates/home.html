@@ -26,10 +26,18 @@
             align-items: center;
             position: sticky;
             top: 0;
+            flex-wrap: wrap;
         }
 
         .top-bar a {
             text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
         }
 
         .login-btn {
@@ -105,7 +113,9 @@
         }
 
         .image-wrapper img {
-            max-width: 70%;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
@@ -156,50 +166,131 @@
             margin-top: 3rem;
             font-size: 0.95rem;
         }
+
+        .burger-menu {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            justify-content: space-around;
+            width: 2rem;
+            height: 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10;
+        }
+
+        .burger-line {
+            width: 2rem;
+            height: 0.25rem;
+            background-color: #333;
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: 1px;
+        }
+
+        @media (min-width: 600px) {
+            .image-wrapper img {
+                max-width: 70%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                justify-content: space-between;
+            }
+
+            .burger-menu {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column; /* Stack vertically */
+                background-color: rgba(255, 255, 255, 0.9); /* Half-transparent white background */
+                position: absolute; /* Position over content */
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh; /* Full viewport height */
+                justify-content: center; /* Center items vertically */
+                align-items: center; /* Center items horizontally */
+            }
+            
+            .nav-links.active > div {
+                flex-direction: column; /* Stack the internal divs vertically too */
+                margin-bottom: 20px; /* Add some space between sections */
+            }
+
+            .nav-links.active a,
+            .nav-links.active form,
+            .nav-links.active button {
+                margin: 10px 0 !important; /* Adjust margins for vertical stacking */
+            }
+
+            .nav-links.active select {
+                margin: 10px 0 !important;
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <!-- TOP BAR -->
-    <div class="top-bar" style="justify-content: space-between;">
-        <div style="display: flex; align-items: center;">
-             {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}" style="margin-left: 20px; text-decoration: none; color: #ff6b81; font-weight: bold; font-size: 1.1rem;">{% trans "📊 Community Dashboard" %}</a>
-             {% endif %}
-        </div>
-        
-        <div style="display: flex; align-items: center;">
-            <form action="{% url 'set_language' %}" method="post" style="display:flex; margin-right: 15px;">
-                {% csrf_token %}
-                <input name="next" type="hidden" value="{{ redirect_to }}">
-                <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 5px; border: 1px solid #ccc;">
-                    {% get_current_language as LANGUAGE_CODE %}
-                    {% get_available_languages as LANGUAGES %}
-                    {% get_language_info_list for LANGUAGES as languages %}
-                    {% for language in languages %}
-                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                            {{ language.name_local }} ({{ language.code }})
-                        </option>
-                    {% endfor %}
-                </select>
-            </form>
-
-            {% if user.is_authenticated %}
-                <a href="{% url 'chatbot' %}" style="margin-right: 15px; text-decoration: none; color: #ff6b81; font-weight: bold;">{% trans "AI Assistant" %}</a>
-                <span>{% trans "Welcome" %}, {{ user.username }}!</span>
-                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+    <div class="top-bar">
+        <a href="#" class="burger-menu" id="burger-menu">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+        </a>
+        <div class="nav-links" id="nav-links">
+            <div style="display: flex; align-items: center;">
+                 {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" style="text-decoration: none; color: #ff6b81; font-weight: bold; font-size: 1.1rem;">{% trans "📊 Community Dashboard" %}</a>
+                 {% endif %}
+            </div>
+            
+            <div style="display: flex; align-items: center;">
+                <form action="{% url 'set_language' %}" method="post" style="display:flex; margin-right: 15px;">
                     {% csrf_token %}
-                    <button type="submit" class="login-btn" style="margin-left: 10px;">{% trans "Logout" %}</button>
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 5px; border: 1px solid #ccc;">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
                 </form>
-            {% else %}
-                <a href="{% url 'register' %}" style="margin-right: 10px;">
-                    <button class="login-btn" style="background-color: #ff8fa3;">{% trans "Register" %}</button>
-                </a>
-                <a href="{% url 'login' %}">
-                    <button class="login-btn">{% trans "Login" %}</button>
-                </a>
-            {% endif %}
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'chatbot' %}" style="margin-right: 15px; text-decoration: none; color: #ff6b81; font-weight: bold;">{% trans "AI Assistant" %}</a>
+                    <span>{% trans "Welcome" %}, {{ user.username }}!</span>
+                    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="login-btn" style="margin-left: 10px;">{% trans "Logout" %}</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'register' %}" style="margin-right: 10px;">
+                        <button class="login-btn" style="background-color: #ff8fa3;">{% trans "Register" %}</button>
+                    </a>
+                    <a href="{% url 'login' %}">
+                        <button class="login-btn">{% trans "Login" %}</button>
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
 
@@ -242,6 +333,16 @@
     <footer>
         {% trans "© 2025 AGH-Love-Support-Research • Helping couples grow stronger together" %}
     </footer>
+
+    <script>
+        const burgerMenu = document.getElementById('burger-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        burgerMenu.addEventListener('click', (e) => {
+            e.preventDefault();
+            navLinks.classList.toggle('active');
+        });
+    </script>
 
 </body>
 </html>
