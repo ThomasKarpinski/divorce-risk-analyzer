@@ -76,6 +76,27 @@
             border-radius: 4px;
             text-decoration: none;
         }
+
+        /* Stats Card Style */
+        .stats-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 2rem;
+            border-top: 4px solid #3498db;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .stat-item h4 { margin: 0; color: #666; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #3498db; }
     </style>
 </head>
 <body>
@@ -85,7 +106,7 @@
         <nav>
             <form action="{% url 'set_language' %}" method="post" style="display:inline; margin-right: 15px;">
                 {% csrf_token %}
-                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <input name="next" type="hidden" value="{{ request.path }}">
                 <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 5px; border: none; background: rgba(255,255,255,0.8); color: #333;">
                     {% get_current_language as LANGUAGE_CODE %}
                     {% get_available_languages as LANGUAGES %}
@@ -98,7 +119,7 @@
                 </select>
             </form>
             <a href="{% url 'home' %}">{% trans "Home" %}</a>
-            <a href="{% url 'survey' %}">{% trans "New Survey" %}</a>
+            <a href="{% url 'personal_dashboard' %}">{% trans "Personal Report" %}</a>
             <a href="{% url 'logout' %}">{% trans "Logout" %}</a>
         </nav>
     </header>
@@ -114,6 +135,29 @@
             <div style="text-align: center; margin-bottom: 2rem;">
                 <h2>{% trans "How do you compare?" %}</h2>
                 <p>{% trans "Real-time data from all registered users." %}</p>
+            </div>
+
+            <!-- Comparison Stats Section -->
+            <div class="stats-card">
+                <h3>{% trans "Model Accuracy & Divergence" %}</h3>
+                <p>{% trans "Comparing Machine Learning Predictions vs. Gottman Method Clinical Analysis across all users." %}</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h4>{% trans "Gottman > ML Model" %}</h4>
+                        <div class="stat-value">{{ comparison_stats.gottman_higher }}</div>
+                        <p><small>{% trans "Users where theory predicts higher risk" %}</small></p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>{% trans "ML Model > Gottman" %}</h4>
+                        <div class="stat-value">{{ comparison_stats.ml_higher }}</div>
+                        <p><small>{% trans "Users where data patterns predict higher risk" %}</small></p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>{% trans "Perfect Alignment" %}</h4>
+                        <div class="stat-value" style="color: #2ecc71;">{{ comparison_stats.equal }}</div>
+                        <p><small>{% trans "Users where both methods agree exactly" %}</small></p>
+                    </div>
+                </div>
             </div>
 
             <div class="dashboard-grid">

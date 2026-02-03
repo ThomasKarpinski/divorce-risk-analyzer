@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Terms of Service" %}{% endblock %}
+
+{% block extra_head %}
+<style>
+    .terms-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1 { color: #ff6b81; }
+    h2 { margin-top: 1.5rem; color: #333; }
+    .disclaimer {
+        background-color: #ffe4e6;
+        border-left: 5px solid #ff6b81;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="terms-container">
+    <h1>{% trans "Terms of Service" %}</h1>
+    <p>{% trans "Effective Date: February 1, 2026" %}</p>
+
+    <div class="disclaimer">
+        {% trans "CRITICAL DISCLAIMER: This application provides automated estimations based on statistical models. It DOES NOT constitute professional psychological, legal, or medical advice. The results should be treated as informational only." %}
+    </div>
+
+    <h2>1. {% trans "Acceptance of Terms" %}</h2>
+    <p>{% trans "By registering and using this application, you agree to these Terms of Service and our Privacy Policy." %}</p>
+
+    <h2>2. {% trans "Limitation of Liability" %}</h2>
+    <p>{% trans "The creators of this application are not liable for any decisions made based on the results provided by the system. You are solely responsible for your life choices." %}</p>
+
+    <h2>3. {% trans "User Conduct" %}</h2>
+    <p>{% trans "You agree to provide accurate information to the best of your knowledge to ensure the validity of the statistical analysis." %}</p>
+
+    <h2>4. {% trans "Changes to Terms" %}</h2>
+    <p>{% trans "We reserve the right to modify these terms at any time. Continued use of the service constitutes acceptance of the new terms." %}</p>
+</div>
+{% endblock %}

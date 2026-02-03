@@ -1,0 +1,249 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Divorce Risk Survey{% endblock %}</title>
+    
+    <!-- Cookie Consent Style -->
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(to bottom right, #f2f7ff, #fde7ef);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- RESPONSIVE NAVBAR --- */
+        .top-bar {
+            width: 100%;
+            padding: 0.8rem 2rem;
+            box-sizing: border-box;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-brand {
+            font-weight: bold;
+            color: #ff6b81;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-menu a:hover {
+            color: #ff6b81;
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: #ff6b81;
+            transition: 0.3s;
+        }
+
+        .login-btn {
+            background-color: #ff6b81;
+            color: white !important;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: 0.25s;
+        }
+
+        .login-btn:hover {
+            background-color: #ff506b;
+            transform: translateY(-2px);
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                right: -100%;
+                top: 60px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+                padding: 20px 0;
+                gap: 15px;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .burger {
+                display: flex;
+            }
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            z-index: 1000;
+            display: none; /* Hidden by default, shown via JS */
+        }
+
+        .cookie-btn {
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #ff6b81;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+            margin: 0 0.5rem;
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <nav class="top-bar">
+        <a href="{% url 'home' %}" class="nav-brand">AGH Love Support</a>
+        
+        <div class="nav-menu" id="nav-menu">
+            {% if user.is_authenticated %}
+                <a href="{% url 'personal_dashboard' %}">{% trans "📈 Your Personal Report" %}</a>
+                <a href="{% url 'dashboard' %}">{% trans "📊 Community Dashboard" %}</a>
+                <a href="{% url 'chatbot' %}">{% trans "AI Assistant" %}</a>
+            {% endif %}
+
+            <form action="{% url 'set_language' %}" method="post" style="display:flex;">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.path }}">
+                <select name="language" onchange="this.form.submit()" style="border-radius: 20px; padding: 2px 10px; border: 1px solid #ccc; font-size: 0.8rem;">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.code|upper }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+
+            {% if user.is_authenticated %}
+                <span style="font-size: 0.9rem;">{{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="login-btn">{% trans "Logout" %}</button>
+                </form>
+            {% else %}
+                <a href="{% url 'register' %}" class="login-btn" style="background-color: #ff8fa3;">{% trans "Register" %}</a>
+                <a href="{% url 'login' %}" class="login-btn">{% trans "Login" %}</a>
+            {% endif %}
+            
+            {% block extra_nav %}{% endblock %}
+        </div>
+
+        <div class="burger" id="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <p>
+            © 2026 AGH-Love-Support-Research • 
+            <a href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}</a> • 
+            <a href="{% url 'terms' %}">{% trans "Terms of Service" %}</a>
+        </p>
+    </footer>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner">
+        <span>
+            {% trans "We use cookies to ensure the proper functioning of the site and for security purposes. By continuing to use this site, you agree to our use of cookies." %}
+        </span>
+        <button id="accept-cookies" class="cookie-btn">{% trans "I Agree" %}</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!localStorage.getItem("cookiesAccepted")) {
+                document.getElementById("cookie-banner").style.display = "block";
+            }
+
+            document.getElementById("accept-cookies").addEventListener("click", function() {
+                localStorage.setItem("cookiesAccepted", "true");
+                document.getElementById("cookie-banner").style.display = "none";
+            });
+
+            // Burger Menu Toggle
+            const burger = document.getElementById('burger');
+            const nav = document.getElementById('nav-menu');
+
+            burger.addEventListener('click', () => {
+                nav.classList.toggle('active');
+                burger.classList.toggle('toggle');
+            });
+        });
+    </script>
+</body>
+</html>

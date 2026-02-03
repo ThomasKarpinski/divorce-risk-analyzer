@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.contrib.auth.views import LogoutView
 from core.views import home
 from users.views import register_view, login_view
-from predictions.views import survey_view, result_view, dashboard_view
+from predictions.views import survey_view, result_view, dashboard_view, personal_dashboard_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,6 +14,13 @@ urlpatterns = [
     path('survey/', survey_view, name='survey'),
     path('result/', result_view, name='result'),
     path('dashboard/', dashboard_view, name='dashboard'),
+    path('dashboard/personal/', personal_dashboard_view, name='personal_dashboard'),
+    path('legal/', include('core.urls')),
+    
+    # Override default login to use our custom view
+    path('accounts/login/', login_view),
+    # Password Reset (Built-in Django views)
+    path('accounts/', include('django.contrib.auth.urls')),
     
     # API endpoints
     path('api/', include('predictions.urls')),
