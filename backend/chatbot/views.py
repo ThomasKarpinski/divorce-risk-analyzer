@@ -140,11 +140,12 @@ class ChatView(APIView):
 
         # Defining System Prompt with Chain of Thought
         system_prompt_text = (
+            
             "You are a helpful and empathetic relationship counselor AI (Gottman Method).\n"
             f"{lang_instruction}\n"
             "Below is the data from the user's divorce risk survey. You MUST memorize this:\n\n"
             
-            f"=== SURVEY_DATA ===\n{survey_context}\n===================\n\n"
+            f"SURVEY_DATA \n{survey_context}\n\n"
             
             "INSTRUCTIONS:\n"
             "1. If the user asks about the survey/results, refer explicitly to the SURVEY_DATA above.\n"
