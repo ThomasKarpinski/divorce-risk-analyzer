@@ -182,9 +182,13 @@ def dashboard_view(request):
             'message': "You need to complete the survey first to see the community dashboard."
         })
 
-    predictions = Prediction.objects.filter(user__isnull=False).select_related('user')
+    predictions = Prediction.objects.filter(user__isnull=False).select_related('user', 'answers')
     
     data = []
+    gottman_higher_count = 0
+    ml_higher_count = 0
+    equal_count = 0
+
     for pred in predictions:
         u = pred.user
         age = None
@@ -192,8 +196,32 @@ def dashboard_view(request):
             today = date.today()
             age = today.year - u.birthdate.year - ((today.month, today.day) < (u.birthdate.month, u.birthdate.day))
         
+        ml_score = int(pred.risk_score * 100)
+        
+        # Calculate Gottman score for this user
+        gottman_score = 0
+        if hasattr(pred, 'answers'):
+            ans = pred.answers
+            def get_v(q_num): return getattr(ans, f'q{q_num}', 0)
+            
+            # Simplified Gottman calculation logic for bulk
+            def cat_score(q_list, rev=None):
+                t = sum([(4-get_v(q)) if (rev and q in rev) else get_v(q) for q in q_list])
+                return (t / (len(q_list)*4)) * 100
+            
+            grp_a_b = (cat_score(range(21, 31)) + cat_score(range(10, 21)) + cat_score([5,6,7,8,9], [6,7]) + cat_score([1,2,3,4])) / 4
+            grp_c = (cat_score([31,32,33,34,35,36,52,53,54]) + cat_score(range(37,42)) + cat_score(range(42,48)) + cat_score(range(48,52))) / 4
+            gottman_score = int((( (100 - grp_a_b) + (grp_c * 2) ) / 3))
+
+        if gottman_score > ml_score:
+            gottman_higher_count += 1
+        elif ml_score > gottman_score:
+            ml_higher_count += 1
+        else:
+            equal_count += 1
+
         data.append({
-            'Risk Score': pred.risk_score * 100,
+            'Risk Score': ml_score,
             'Gender': u.gender if u.gender else 'Unknown',
             'Education': u.education if u.education else 'Unknown',
             'Age': age if age is not None else 0
@@ -239,12 +267,123 @@ def dashboard_view(request):
             range_x=[0, 100]
         )
         graphs.append(pio.to_html(fig_age, full_html=False))
-
+    
     context = {
-        'graphs': graphs
+        'graphs': graphs,
+        'comparison_stats': {
+            'gottman_higher': gottman_higher_count,
+            'ml_higher': ml_higher_count,
+            'equal': equal_count,
+            'total': len(predictions)
+        }
     }
 
     return render(request, 'dashboard.html', context)
+
+@login_required
+def personal_dashboard_view(request):
+    """Generates a structured report based on Gottman Method analysis."""
+    latest_prediction = Prediction.objects.filter(user=request.user).order_by('-created_at').first()
+    
+    if not latest_prediction:
+        return render(request, 'personal_dashboard.html', {'has_data': False})
+
+    try:
+        answers = latest_prediction.answers
+    except SurveyAnswer.DoesNotExist:
+        return render(request, 'personal_dashboard.html', {'has_data': False})
+
+    # 1. ANALYSIS LOGIC & CATEGORIZATION
+    def get_val(q_num):
+        return getattr(answers, f'q{q_num}', 0)
+
+    def calc_category_score(q_list, reverse_list=None):
+        total = 0
+        max_possible = len(q_list) * 4
+        for q in q_list:
+            val = get_val(q)
+            if reverse_list and q in reverse_list:
+                val = 4 - val
+            total += val
+        return int((total / max_possible) * 100) if max_possible > 0 else 0
+
+    # Map Gottman Categories
+    love_maps = calc_category_score(range(21, 31))
+    shared_meaning = calc_category_score(range(10, 21))
+    
+    # Turning Towards & Fondness (Reverse Q6, Q7)
+    fondness = calc_category_score([5, 6, 7, 8, 9], reverse_list=[6, 7])
+    
+    repair = calc_category_score([1, 2, 3, 4])
+    
+    # Risks (High = Bad)
+    criticism = calc_category_score([31, 32, 33, 34, 35, 36, 52, 53, 54])
+    harsh_startup = calc_category_score([37, 38, 39, 40, 41])
+    stonewalling = calc_category_score([42, 43, 44, 45, 46, 47])
+    defensiveness = calc_category_score([48, 49, 50, 51])
+
+    # OVERALL CALCULATION (Weight Group C double)
+    group_a_b_avg = (love_maps + shared_meaning + fondness + repair) / 4
+    group_c_avg = (criticism + harsh_startup + stonewalling + defensiveness) / 4
+    
+    # Risk calculation: More Group C and less Group A/B = High Risk
+    # We invert Group A/B (100 - score) to get a risk contribution
+    overall_risk = int((( (100 - group_a_b_avg) + (group_c_avg * 2) ) / 3))
+    overall_risk = max(0, min(100, overall_risk))
+
+    # Summaries
+    risk_level = "Low"
+    if overall_risk > 80: risk_level = "Critical"
+    elif overall_risk > 60: risk_level = "High"
+    elif overall_risk > 40: risk_level = "Moderate"
+
+    strengths = [
+        ("Love Maps", love_maps), ("Shared Meaning", shared_meaning), 
+        ("Fondness", fondness), ("Repair Attempts", repair)
+    ]
+    primary_strength = max(strengths, key=lambda x: x[1])[0]
+
+    dangers = [
+        ("Criticism & Contempt", criticism), ("Harsh Startup", harsh_startup),
+        ("Stonewalling", stonewalling), ("Defensiveness", defensiveness)
+    ]
+    primary_danger = max(dangers, key=lambda x: x[1])[0]
+
+    # Structure JSON
+    report_data = {
+        "ml_model_analysis": {
+            "risk_score": int(latest_prediction.risk_score * 100),
+            "method": "Machine Learning (Random Forest/XGBoost)"
+        },
+        "gottman_analysis": {
+            "overall_divorce_risk": overall_risk,
+            "risk_level": risk_level,
+            "primary_strength": primary_strength,
+            "primary_danger": primary_danger,
+            "method": "Psychological Analysis (Gottman Method)"
+        },
+        "dashboard_stats": {
+            "friendship_system": [
+                {"category": "Love Maps", "score_percent": love_maps, "status": "Good" if love_maps > 60 else "Needs Improvement", "feedback": "Understanding your partner's inner world."},
+                {"category": "Shared Meaning", "score_percent": shared_meaning, "status": "Good" if shared_meaning > 60 else "Needs Improvement", "feedback": "Creating a shared life vision."},
+                {"category": "Turning Towards & Fondness", "score_percent": fondness, "status": "Good" if fondness > 60 else "Needs Improvement", "feedback": "Quality of emotional connection."}
+            ],
+            "conflict_management": [
+                {"category": "Repair Attempts", "score_percent": repair, "status": "Good" if repair > 60 else "Needs Improvement", "feedback": "Ability to de-escalate conflicts."}
+            ],
+            "risk_factors": [
+                {"category": "Criticism & Contempt", "score_percent": criticism, "risk_severity": "High" if criticism > 60 else "Low", "gottman_note": "Contempt is the #1 predictor of divorce."},
+                {"category": "Harsh Startup", "score_percent": harsh_startup, "risk_severity": "High" if harsh_startup > 60 else "Low", "gottman_note": "96% of arguments end the way they begin."},
+                {"category": "Stonewalling", "score_percent": stonewalling, "risk_severity": "High" if stonewalling > 60 else "Low", "gottman_note": "A physiological response to flooding."},
+                {"category": "Defensiveness", "score_percent": defensiveness, "risk_severity": "High" if defensiveness > 60 else "Low", "gottman_note": "Prevents problem-solving."}
+            ]
+        }
+    }
+
+    return render(request, 'personal_dashboard.html', {
+        'has_data': True,
+        'data': report_data
+    })
 
 # API VIEWS (Existing)
 class PredictView(APIView):
